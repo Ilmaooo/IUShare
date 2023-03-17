@@ -5,11 +5,13 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
+import Header from "./components/Header";
 
 function App() {
   return (
     <>
       <Router>
+        <Header></Header>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
