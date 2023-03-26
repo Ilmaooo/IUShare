@@ -6,7 +6,7 @@ const NavLinks = () => {
   const [heading, setHeading] = useState("");
   const [subHeading, setSubHeading] = useState("");
   return (
-    <div className="tex-right">
+    <div className="text-right">
       {links.map((link) => (
         <div>
           <div className="px-3 text-left md:cursor-pointer group">

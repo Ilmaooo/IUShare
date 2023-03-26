@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Header from "./components/Header";
+import SinglePost from "./pages/SinglePost";
 
 function App() {
   return (
@@ -18,7 +19,11 @@ function App() {
           <Route path="/log-in" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/course-page" element={<CoursePage />} />
+          <Route path="/category/:categoryName" element={<CoursePage />} />
+          <Route
+            path="/category/:categoryName/:postId"
+            element={<SinglePost />}
+          />
         </Routes>
       </Router>
     </>

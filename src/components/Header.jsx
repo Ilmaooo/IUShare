@@ -18,7 +18,7 @@ export default function Header() {
             </div>
           </div>
 
-          <ul className="md:flex hidden  items-center gap-8 font-[Poppins] text-[#005696] justify-end flex-grow mr-3">
+          <ul className="md:flex hidden  items-center gap-8 font-[Poppins] text-[#005696] justify-end flex-grow mr-3 z-50">
             <li>
               <Link to="/" className="py-7 px-3 inline-block">
                 Home
