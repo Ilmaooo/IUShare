@@ -17,23 +17,41 @@ export default function Profile() {
     <br />
     <br />
     <br />
-    <div className="grid grid-cols-2 grid-rows-1">
-    <div className="flex items-center justify-center">
-  <div className="grid grid-cols-2 gap-6">
+    <div className="grid grid-cols-2 grid-rows-1 gap-x-0 px-10">
+    <div className="flex items-center justify-center ">
+  <div className="pr-1 grid grid-cols-2 gap-3 h-96 overflow-y-scroll scroll-auto">
   <PostView/>
     <PostView/>
     <PostView/>
     <PostView/>
-  
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
+    <PostView/>
   </div>
 </div>
 <div className="flex items-center justify-center">
-  <div className="grid grid-cols-2 gap-6">
+  <div className="pr-1 grid grid-cols-2 gap-3  h-96 overflow-y-scroll scroll-auto">
   <PostView/>
     <PostView/>
     <PostView/>
     <PostView/>
-    
   </div>
 </div>
 

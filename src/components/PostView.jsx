@@ -8,7 +8,7 @@ Right now it is just a picture.
 
 function PostView() {
 return(
-    <div className="post"> {/* TODO: add actual info, for now gray placeholder */}
+    <div className="md:cursor-pointer post"> {/* TODO: add actual info, for now gray placeholder */}
        <img src={post} alt="post" className="something"  />
     </div>
 )
