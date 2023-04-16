@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Home from "./pages/Home";
 import CoursePage from "./pages/CoursePage";
 import ForgotPassword from "./pages/ForgotPassword";
@@ -12,7 +17,7 @@ function App() {
   return (
     <>
       <Router>
-        <Header></Header>
+        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />

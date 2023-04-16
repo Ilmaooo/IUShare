@@ -1,11 +1,11 @@
 import { Avatar } from "@mui/material";
 import React, { useState } from "react";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import { VscAccount } from "react-icons/vsc";
-import {BsSearch} from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
-
+import Header from "../components/Header";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,29 +28,32 @@ export default function Home() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   return (
     <div className="flex flex-col">
       <div className="bg-blue-300 ">
-         <div className="justify-self-start float-left inset-y-0 left-0 p-4">
-           <nav className="float-left inset-y-0 left-0 p-4 text-center">
-              <Avatar alt="User Avatar"
-               onClick={handleClick} ><VscAccount/></Avatar>
-              <Menu
-               anchorEl={anchorEl}
-               open={Boolean(anchorEl)}
-               onClose={handleClose}
-              >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}><Link to="/Register">Sing-out</Link></MenuItem>
-              </Menu>
-            </nav>
-         </div>
-         <div className="justify-self-end float-right inset-y-0 right-0 px-6 py-8">
-           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 pr-2 rounded">
+        <div className="justify-self-start float-left inset-y-0 left-0 p-4">
+          <nav className="float-left inset-y-0 left-0 p-4 text-center">
+            <Avatar alt="User Avatar" onClick={handleClick}>
+              <VscAccount />
+            </Avatar>
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>
+                <Link to="/Register">Sing-out</Link>
+              </MenuItem>
+            </Menu>
+          </nav>
+        </div>
+        <div className="justify-self-end float-right inset-y-0 right-0 px-6 py-8">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 pr-2 rounded">
             <Link to="/Share-Note">Share Note</Link>
-           </button>
-         </div>
+          </button>
+        </div>
       </div>
 
       <div className="w-1/2 mx-auto mt-10 ">
@@ -67,7 +70,7 @@ export default function Home() {
               className="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
               type="submit"
             >
-              <BsSearch/>
+              <BsSearch />
             </button>
           </div>
         </form>

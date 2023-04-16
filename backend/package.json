@@ -1,0 +1,23 @@
+{
+  "name": "iushare-backend",
+  "version": "1.0.0",
+  "description": "Back-end for our notes sharing app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ilmaooo/IUShare.git"
+  },
+  "author": "Ilma-Ogresevic Ajna-Veladzic Fahira-Delalic Rumejsa-Sedic Rand-Saleh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Ilmaooo/IUShare/issues"
+  },
+  "homepage": "https://github.com/Ilmaooo/IUShare#readme",
+  "dependencies": {
+    "firebase-admin": "^11.6.0",
+    "firebase-functions": "^4.3.0"
+  }
+}

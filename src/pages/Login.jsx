@@ -14,7 +14,8 @@ export default function Login() {
             Welcome back to IUShare
           </h1>
           <p className="mt-1 text-sky-600">
-            Don't Just Take Notes, Share Them - Join the IUS CS/SE Collaborative Learning Experience
+            Don't Just Take Notes, Share Them - Join the IUS CS/SE Collaborative
+            Learning Experience
           </p>
         </div>
         <div className="float-right inset-y-0 right-0 px-6 py-8">
@@ -55,7 +56,9 @@ export default function Login() {
                   onClick={togglePassword}
                 >
                   <i
-                    className={`far ${passwordShown ? "fa-eye-slash" : "fa-eye"}`}
+                    className={`far ${
+                      passwordShown ? "fa-eye-slash" : "fa-eye"
+                    }`}
                   ></i>
                 </button>
               </div>
@@ -74,7 +77,6 @@ export default function Login() {
                 Log in
               </button>
             </div>
-           
           </form>
           <div className="text-center text-sm text-gray-600">
             New to IUShare?{" "}
