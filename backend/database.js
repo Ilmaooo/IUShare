@@ -1,12 +1,10 @@
 // Import the Firebase Admin SDK
 const admin = require("firebase-admin");
-
-// Import the Firebase project credentials from the firebaseConfig.js file
-const firebaseConfig = require("./firebaseConfig");
+const serviceAccount = require("./firebaseConfig.json");
 
 // Initialize the Firebase Admin SDK with the project credentials and database URL
 admin.initializeApp({
-  credential: admin.credential.cert(firebaseConfig),
+  credential: admin.credential.cert(serviceAccount),
   databaseURL:
     "https://iushare-51a0e-default-rtdb.europe-west1.firebasedatabase.app/",
 });

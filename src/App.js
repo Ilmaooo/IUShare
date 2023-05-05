@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import Register from "./pages/Register";
 import Header from "./components/Header";
 import SinglePost from "./pages/SinglePost";
+import ShareNotes from "./pages/ShareNotes";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/log-in" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/share-notes" element={<ShareNotes />} />
           <Route path="/category/:categoryName" element={<CoursePage />} />
           <Route
             path="/category/:categoryName/:postId"

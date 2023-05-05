@@ -44,14 +44,14 @@ export default function Home() {
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link to="/Register">Sing-out</Link>
+                <Link to="/register">Sing-out</Link>
               </MenuItem>
             </Menu>
           </nav>
         </div>
         <div className="justify-self-end float-right inset-y-0 right-0 px-6 py-8">
           <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 pr-2 rounded">
-            <Link to="/Share-Note">Share Note</Link>
+            <Link to="/share-notes">Share Note</Link>
           </button>
         </div>
       </div>
