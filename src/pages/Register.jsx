@@ -23,6 +23,7 @@ export default function Register() {
   });
   const { name, email, password, major, yearOfStudy } = formData;
   const navigate = useNavigate();
+
   function onChange(e) {
     const { id, value } = e.target;
     setFormData((prevState) => ({
