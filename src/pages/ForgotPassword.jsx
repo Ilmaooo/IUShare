@@ -37,7 +37,7 @@ export default function ForgotPassword() {
               className="w-full px-3 py-2 border rounded-lg text-blue-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 pr-10"
             />
 
-            <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg">
+            <div className="flex justify-between whitespace-nowrap text-sm sm:text-lg mt-1 mb-1">
               <p className="mb-6  text-sm text-gray-600">
                 New to IUShare?
                 <Link
