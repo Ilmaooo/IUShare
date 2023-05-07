@@ -19,14 +19,12 @@ export default function OAuth() {
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
-        await setDoc(docRef, {
-          name: user.displayName,
-          email: user.email,
-          timestamp: serverTimestamp(),
-        });
+        // User doesn't exist, navigate to additional info
+        navigate("/additional-info");
+      } else {
+        // User exists, navigate to the home page
+        navigate("/");
       }
-
-      navigate("/additional-info");
     } catch (error) {
       toast.error("Could not authorize with Google");
     }
