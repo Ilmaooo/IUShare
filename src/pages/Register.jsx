@@ -1,130 +1,71 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import OAuth from "../components/OAuth";
 
 export default function Register() {
-  const [passwordShown, setPasswordShown] = useState(false);
-  const togglePassword = () => setPasswordShown(!passwordShown);
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
-
-  const [formInput, setFormInput] = useState({
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: "",
   });
-
-  const [, setFormError] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleUserInput = (name, value) => {
-    setFormInput({
-      ...formInput,
-      [name]: value,
-    });
-  };
-
-  const validateFormInput = (event) => {
-    event.preventDefault();
-    let inputError = {
-      nmae: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    };
-
-    if (!formInput.email && !formInput.password) {
-      setFormError({
-        ...inputError,
-        email: "Enter valid email address",
-        password: "Password should not be empty",
-      });
-      return;
-    }
-
-    if (!formInput.email) {
-      // how to validate the email
-      setFormError({
-        ...inputError,
-        email: "Enter valid email address",
-      });
-      return;
-    }
-
-    if (formInput.confirmPassword !== formInput.password) {
-      // need to use it but not sure how
-      setFormError({
-        ...inputError,
-        confirmPassword: "Password and confirm password should be same",
-      });
-      return;
-    }
-
-    if (!formInput.password) {
-      setFormError({
-        ...inputError,
-        password: "Password should not be empty",
-      });
-      return;
-    }
-
-    setFormError(inputError);
-  };
-
+  const { name, email, password } = formData;
+  function onChange(e) {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.id]: e.target.value,
+    }));
+  }
   return (
-    <div className="bg-blue-100 min-h-screen flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-md w-full">
-        <div className="p-4 text-center">
-          <h1 className="text-2xl font-semibold text-gray-800">
-            Create your Account , JOIN US
-          </h1>
+    <section className="bg-sky-100">
+      <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none">
+        Create your account - Join us
+      </h1>
+      <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
+        <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
+          <p className="mt-1 text-blue-900 font-thin text-4xl font-mono select-none">
+            Don't Just Take Notes, Share Them - Join the IUS CS/SE Collaborative
+            Learning Experience
+          </p>
         </div>
-        <div className="px-6 py-8">
-          <form onSubmit={validateFormInput}>
-            <div className="mb-4">
+        <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20 mb-4 shadow-md overflow-hidden rounded-lg p-5 bg-white">
+          <form>
+            <div className="mb-2">
               <label
-                className="block mb-2 font-semibold text-gray-800"
-                htmlFor="text"
+                className="block mb-2 font-semibold text-blue-800"
+                htmlFor="email"
               >
-                Full Name
+                Full name
               </label>
               <input
-                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
-                value={formInput.name}
-                onChange={({ target }) => {
-                  handleUserInput(target.name, target.value);
-                }}
-                name="name"
                 type="text"
                 id="name"
-                placeholder="First, last name"
-                required
+                value={name}
+                onChange={onChange}
+                placeholder="Full name"
+                className="w-full px-3 py-2 border rounded-lg text-blue-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 pr-10"
               />
-            </div>
-            <div className="mb-4">
               <label
-                className="block mb-2 font-semibold text-gray-800"
+                className="block mb-2 font-semibold text-blue-800"
                 htmlFor="email"
               >
                 IUS Email
               </label>
               <input
-                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:shadow-outline-blue focus:border-blue-300"
-                name="email"
                 type="email"
                 id="email"
-                placeholder="id@flowbite.edu.ba"
-                required
+                value={email}
+                onChange={onChange}
+                placeholder="Email address"
+                className="w-full px-3 py-2 border rounded-lg text-blue-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 pr-10"
               />
             </div>
-            <div className="mb-4 flex px-2 content-between">
+            <div className="mb-4 flex content-between">
               <div className="mr-4">
                 <label
                   for="Major"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 font-semibold text-blue-800"
                 >
                   Major
                 </label>
@@ -140,7 +81,7 @@ export default function Register() {
               <div>
                 <label
                   for="Year"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 font-semibold text-blue-800"
                 >
                   Year
                 </label>
@@ -157,79 +98,48 @@ export default function Register() {
                 </select>
               </div>
             </div>
-            <div className="mb-4">
+
+            <div className="relative mb-6">
               <label
-                for="password"
-                className="block mb-2 font-semibold text-gray-800"
+                className="block mb-2 font-semibold text-blue-800"
                 htmlFor="password"
               >
-                Your Password
+                Password
               </label>
-              <div className="relative">
-                <input
-                  name="password"
-                  className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 pr-10"
-                  type={passwordShown ? "text" : "password"}
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                value={password}
+                onChange={onChange}
+                placeholder="Password"
+                className="w-full px-3 py-2 border rounded-lg text-blue-800 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 pr-10"
+              />
+              {showPassword ? (
+                <AiFillEyeInvisible
+                  className="absolute right-3 top-3 text-xl cursor-pointer"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
                 />
-                <button
-                  type="button"
-                  className="absolute top-0 right-0 mt-3 mr-3"
-                  onClick={togglePassword}
-                >
-                  <i
-                    className={`far ${
-                      passwordShown ? "fa-eye-slash" : "fa-eye"
-                    }`}
-                  ></i>
-                </button>
-              </div>
-            </div>
-            <div className="mb-4">
-              <label
-                for="repeat-password"
-                className="block mb-2 font-semibold text-gray-800"
-                htmlFor="password"
-              >
-                Repeat Password
-              </label>
-              <div className="relative">
-                <input
-                  name="repeatpassword"
-                  className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 pr-10"
-                  type={passwordShown ? "text" : "password"}
-                  id="repeatPassword"
-                  value={repeatPassword}
-                  onChange={(e) => setRepeatPassword(e.target.value)}
-                  required
+              ) : (
+                <AiFillEye
+                  className="absolute right-3 top-3 text-xl cursor-pointer"
+                  onClick={() => setShowPassword((prevState) => !prevState)}
                 />
-                <button
-                  type="button"
-                  className="absolute top-0 right-0 mt-3 mr-3"
-                  onClick={togglePassword}
-                >
-                  <i
-                    className={`far ${
-                      passwordShown ? "fa-eye-slash" : "fa-eye"
-                    }`}
-                  ></i>
-                </button>
-              </div>
+              )}
             </div>
-            <div className="place-self-auto mb-6">
-              <button
-                type="submit"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline-blue"
-              >
-                Register
-              </button>
+
+            <button
+              className="w-full bg-blue-600 text-white px-7 py-2 text-sm font-medium uppercase rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800"
+              type="submit"
+            >
+              Register
+            </button>
+            <div className="flex items-center  my-4 before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
+              <p className="text-center font-semibold mx-4">OR</p>
             </div>
+            <OAuth />
           </form>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
