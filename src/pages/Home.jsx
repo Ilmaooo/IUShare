@@ -31,6 +31,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col">
+      <Header />
       <div className="bg-blue-300 ">
         <div className="justify-self-start float-left inset-y-0 left-0 p-4">
           <nav className="float-left inset-y-0 left-0 p-4 text-center">
@@ -44,7 +45,7 @@ export default function Home() {
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link to="/register">Sing-out</Link>
+                <Link to="/log-in">Sing-out</Link>
               </MenuItem>
             </Menu>
           </nav>

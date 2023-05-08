@@ -37,8 +37,8 @@ export default function LogIn() {
     }
   }
   return (
-    <section className="bg-sky-100">
-      <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none">
+    <section className="flex-row items-center justify-center min-h-screen bg-sky-100">
+      <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-8">
         Welcome back to IUShare
       </h1>
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">

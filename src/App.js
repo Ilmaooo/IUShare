@@ -10,7 +10,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
-import AdditionalInfo from "./components/AdditionalInfoForm";
 import Header from "./components/Header";
 import SinglePost from "./pages/SinglePost";
 import ShareNotes from "./pages/ShareNotes";
@@ -22,7 +21,6 @@ function App() {
   return (
     <>
       <Router>
-        <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/profile" element={<Profile />} />

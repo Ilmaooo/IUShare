@@ -7,6 +7,7 @@ export default function SinglePost() {
 
   return (
     <div>
+      <Header />
       <div className="max-w-4xl mx-auto py-8 font-[Poppins]">
         <h1 className="px-8 py-4 font-[Poppins] text-3xl text-[#005696]">
           The title of the post
