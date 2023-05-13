@@ -4,6 +4,7 @@ import { db } from "../firebase";
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 
+
 function getCurrentUserId() {
   const auth = getAuth();
   const currentUser = auth.currentUser;
@@ -37,6 +38,7 @@ function UserInfo() {
     };
 
     fetchUserData();
+    
   }, []);
 
   if (!userData) {
@@ -49,12 +51,16 @@ function UserInfo() {
         <h3>{userData.name}</h3>
         <h3>{userData.major}</h3>
         <h3>{userData.yearOfStudy}</h3>
+        
+        
+        
       </div>
       <img
-        src={pic}
+        src={userData.PhotoURL}
         alt="pic"
         className="md:cursor-pointer h-24 mr-2 rounded-full top-20 right-20 w-24 my-2"
       />
+      
     </div>
   );
 }

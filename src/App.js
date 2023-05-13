@@ -16,6 +16,7 @@ import ShareNotes from "./pages/ShareNotes";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdditionalInfoForm from "./components/AdditionalInfoForm";
+import EditProfile from "./pages/EditProfile";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/share-notes" element={<ShareNotes />} />
           <Route path="/category/:categoryName" element={<CoursePage />} />
+          <Route path="/edit-profile" element={<EditProfile />} />
           <Route
             path="/category/:categoryName/:postId"
             element={<SinglePost />}

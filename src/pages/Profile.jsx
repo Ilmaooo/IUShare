@@ -2,15 +2,22 @@ import React from "react";
 import UserInfo from "../components/UserInfo";
 import PostView from "../components/PostView";
 import Header from "../components/Header";
+import { Link } from 'react-router-dom';
+
+
 export default function Profile() {
   return (
     <div>
       <Header />
       <UserInfo />
+    
+      
+      
       <br />
       <br />
-      <br />
-      <br />
+      <Link to="/edit-profile" className="bg-blue-900 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded absolute top-25 left-24 text-brown text-2xl">
+          Edit Profile
+        </Link>
 
       <h3 className="absolute top-48 left-24 text-brown text-2xl">
         Saved Notes
