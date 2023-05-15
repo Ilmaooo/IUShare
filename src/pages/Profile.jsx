@@ -15,7 +15,7 @@ export default function Profile() {
       
       <br />
       <br />
-      <Link to="/edit-profile" className="bg-blue-900 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded absolute top-25 left-24 text-brown text-2xl">
+      <Link to="/edit-profile" className="bg-blue-900 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded absolute top-20 left-60 text-brown text-2xl">
           Edit Profile
         </Link>
 

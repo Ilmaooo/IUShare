@@ -3,6 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 
 function getCurrentUserId() {
@@ -18,7 +19,7 @@ function getCurrentUserId() {
 
 function UserInfo() {
   const [userData, setUserData] = useState(null);
-
+  const [userPhoto, setUserPhoto] = useState(null);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -32,10 +33,15 @@ function UserInfo() {
             setUserData(user);
           }
         }
+        const storage = getStorage();
+      // getting a reference to the picture
+        const storageRef = ref(storage, `users/${userId}/profilePhoto.jpg`);
+        setUserPhoto(getDownloadURL(storageRef));
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
+
 
     fetchUserData();
     
@@ -56,7 +62,7 @@ function UserInfo() {
         
       </div>
       <img
-        src={userData.PhotoURL}
+        src={userPhoto}
         alt="pic"
         className="md:cursor-pointer h-24 mr-2 rounded-full top-20 right-20 w-24 my-2"
       />
