@@ -33,7 +33,6 @@ export default function Register() {
   }
   async function onSubmit(e) {
     e.preventDefault();
-
     try {
       const auth = getAuth();
       const userCredential = await createUserWithEmailAndPassword(
