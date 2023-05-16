@@ -23,7 +23,7 @@ export default function OAuth() {
         navigate("/additional-info");
       } else {
         // User exists, navigate to the home page
-        navigate("/");
+        navigate("/home");
       }
     } catch (error) {
       toast.error("Could not authorize with Google");
