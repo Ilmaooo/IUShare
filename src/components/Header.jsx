@@ -5,7 +5,7 @@ import NavLinks from "./NavLinks";
 import { useState } from "react";
 
 export default function Header() {
-  const [open, setOpen] = useState(false);
+  //const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   function pathMathRoute(route) {

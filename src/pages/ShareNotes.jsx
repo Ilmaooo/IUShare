@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Header from "../components/Header";
+import Spinner from "../components/Spinner";
+import { toast } from "react-toastify";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { getAuth } from "firebase/auth";
+import { v4 as uuidv4 } from "uuid";
+import { collection, serverTimestamp, addDoc } from "firebase/firestore";
+import { db } from "../firebase";
+// import { useNavigate } from "react-router-dom";
 
 export default function ShareNotes() {
+  // const navigate = useNavigate();
+  const auth = getAuth();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     username: "",
     notes: [],
     coursecode: "",
   });
-
   const { title, username, notes, coursecode } = formData;
 
   function onChange(e) {
@@ -25,7 +40,89 @@ export default function ShareNotes() {
     }
   }
 
-  async function onSubmit(e) {}
+  async function onSubmit(e) {
+    e.preventDefault();
+    setLoading(true);
+
+    if (notes.length > 6) {
+      setLoading(false);
+      toast.error("Maximum 6 notes are allowed");
+      return;
+    }
+
+    async function storeNote(note) {
+      return new Promise((resolve, reject) => {
+        const storage = getStorage();
+        const filename = `${auth.currentUser.uid}-${note.name}-${uuidv4()}`;
+        const storageRef = ref(storage, filename);
+        const uploadTask = uploadBytesResumable(storageRef, note);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log("Upload is " + progress + "% done");
+            switch (snapshot.state) {
+              case "paused":
+                console.log("Upload is paused");
+                break;
+              case "running":
+                console.log("Upload is running");
+                break;
+              default:
+                return;
+            }
+          },
+          (error) => {
+            // Handle unsuccessful uploads
+            reject(error);
+          },
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              resolve(downloadURL);
+            });
+          }
+        );
+      });
+    }
+
+    const noteUrls = await Promise.all(
+      [...notes].map((note) => storeNote(note))
+    ).catch((error) => {
+      console.log(error);
+      setLoading(false);
+      toast.error("Notes not uploaded");
+      return;
+    });
+    console.log("noteURLS");
+    console.log(noteUrls);
+
+    const formDataCopy = {
+      ...formData,
+      noteUrls,
+      timestamp: serverTimestamp(),
+      userRef: auth.currentUser.uid,
+    };
+    delete formDataCopy.notes;
+    console.log("data Form Copy");
+    console.log(formDataCopy);
+    setLoading(false);
+    console.log("docRef block start");
+    const docRef = await addDoc(collection(db, "notes"), formDataCopy);
+    console.log("success");
+
+    toast.success("Note created");
+    //navigate(`/category/${formDataCopy.type}/${docRef.id}`);
+  }
+
+  if (loading) {
+    return <Spinner />;
+  }
 
   return (
     <main className="bg-sky-100 bg-local bg-cover max-h-fit">
