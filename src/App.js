@@ -10,7 +10,6 @@ import ForgotPassword from "./pages/ForgotPassword";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Register from "./pages/Register";
-import Header from "./components/Header";
 import SinglePost from "./pages/SinglePost";
 import ShareNotes from "./pages/ShareNotes";
 import { ToastContainer } from "react-toastify";
@@ -23,9 +22,9 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
-          <Route path="/log-in" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/additional-info" element={<AdditionalInfoForm />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

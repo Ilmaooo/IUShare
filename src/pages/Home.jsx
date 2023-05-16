@@ -45,7 +45,7 @@ export default function Home() {
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link to="/log-in">Sing-out</Link>
+                <Link to="/">Sing-out</Link>
               </MenuItem>
             </Menu>
           </nav>

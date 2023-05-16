@@ -30,7 +30,7 @@ export default function LogIn() {
         password
       );
       if (userCredentials.user) {
-        navigate("/");
+        navigate("/home");
       }
     } catch (error) {
       toast.error("Bad user credentials");

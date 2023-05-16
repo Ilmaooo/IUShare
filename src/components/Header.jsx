@@ -21,16 +21,16 @@ export default function Header() {
             src={logo}
             alt="logo"
             className="cursor-pointer h-9 "
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/home")}
           />
         </div>
         <div>
           <ul className="flex space-x-10 font-[Poppins] text-[#005696] justify-end flex-grow mr-3 z-50">
             <li
               className={`cursor-pointer py-7 px-3 inline-block border-b-[3px] border-b-transparent ${
-                pathMathRoute("/") && "text-blue-800 border-b-[#005696]"
+                pathMathRoute("/home") && "text-blue-800 border-b-[#005696]"
               }`}
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/home")}
             >
               Home
             </li>
