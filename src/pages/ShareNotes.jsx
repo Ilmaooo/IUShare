@@ -10,7 +10,7 @@ import {
 } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
-import { collection, serverTimestamp, addDoc } from "firebase/firestore";
+import { collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 // import { useNavigate } from "react-router-dom";
 
@@ -49,6 +49,14 @@ export default function ShareNotes() {
       toast.error("Maximum 6 notes are allowed");
       return;
     }
+
+    const auth = getAuth();
+console.log("Current User:", auth.currentUser);
+
+// Verify User UID
+if (auth.currentUser) {
+  const currentUserUID = auth.currentUser.uid;
+  console.log("Current User UID:", currentUserUID);}
 
     async function storeNote(note) {
       return new Promise((resolve, reject) => {
@@ -99,6 +107,12 @@ export default function ShareNotes() {
       toast.error("Notes not uploaded");
       return;
     });
+    // Check if noteUrls is undefined or has any undefined values
+    if (!noteUrls || noteUrls.some((url) => url === undefined)) {
+      setLoading(false);
+      toast.error("Invalid note URLs");
+      return;
+    }
     console.log("noteURLS");
     console.log(noteUrls);
 
@@ -113,7 +127,10 @@ export default function ShareNotes() {
     console.log(formDataCopy);
     setLoading(false);
     console.log("docRef block start");
-    const docRef = await addDoc(collection(db, "notes"), formDataCopy);
+
+    const docRef = doc(collection(db, "listings"));
+    await setDoc(docRef, formDataCopy);
+
     console.log("success");
 
     toast.success("Note created");
@@ -125,7 +142,7 @@ export default function ShareNotes() {
   }
 
   return (
-    <main className="bg-sky-100 bg-local bg-cover max-h-fit">
+    <main >
       <Header />
       <div className="max-w-md px-2 mx-auto">
         <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3">
