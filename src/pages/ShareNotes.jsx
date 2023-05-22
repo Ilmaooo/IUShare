@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
@@ -12,11 +12,14 @@ import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
 import { collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
+
 // import { useNavigate } from "react-router-dom";
 
 export default function ShareNotes() {
   // const navigate = useNavigate();
+
   const auth = getAuth();
+  const currentUser = auth.currentUser;
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -25,6 +28,10 @@ export default function ShareNotes() {
     coursecode: "",
   });
   const { title, username, notes, coursecode } = formData;
+
+  if (currentUser) {
+    formData.username = currentUser.displayName || currentUser.email;
+  }
 
   function onChange(e) {
     if (e.target.files) {
@@ -51,12 +58,14 @@ export default function ShareNotes() {
     }
 
     const auth = getAuth();
-console.log("Current User:", auth.currentUser);
+    console.log("Current User:", auth.currentUser);
+    console.log("Current user name: ", auth.currentUser.name);
 
-// Verify User UID
-if (auth.currentUser) {
-  const currentUserUID = auth.currentUser.uid;
-  console.log("Current User UID:", currentUserUID);}
+    // Verify User UID
+    if (auth.currentUser) {
+      const currentUserUID = auth.currentUser.uid;
+      console.log("Current User UID:", currentUserUID);
+    }
 
     async function storeNote(note) {
       return new Promise((resolve, reject) => {
@@ -142,7 +151,7 @@ if (auth.currentUser) {
   }
 
   return (
-    <main >
+    <main>
       <Header />
       <div className="max-w-md px-2 mx-auto">
         <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3">
@@ -165,8 +174,7 @@ if (auth.currentUser) {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={onChange}
+            value={formData.username}
             placeholder="Name"
             maxLength="32"
             required
