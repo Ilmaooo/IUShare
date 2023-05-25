@@ -142,7 +142,7 @@ export default function ShareNotes() {
     console.log("success");
 
     toast.success("Note created");
-    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
+    navigate(`/home`);
   }
 
   if (loading) {
@@ -245,6 +245,7 @@ export default function ShareNotes() {
           <option>CS306</option>
           <option>CS307</option>
           <option>CS308</option>
+          <option>CS310</option>
           <option>CS313</option>
           <option>CS412</option>
           <option>ENS101</option>
