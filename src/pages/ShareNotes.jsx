@@ -12,22 +12,21 @@ import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
 import { collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
-
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function ShareNotes() {
-  // const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const auth = getAuth();
   const currentUser = auth.currentUser;
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
+    description: "",
     username: "",
     notes: [],
     coursecode: "",
   });
-  const { title, username, notes, coursecode } = formData;
+  const { title, description, username, notes, coursecode } = formData;
 
   if (currentUser) {
     formData.username = currentUser.displayName || currentUser.email;
@@ -143,7 +142,7 @@ export default function ShareNotes() {
     console.log("success");
 
     toast.success("Note created");
-    //navigate(`/category/${formDataCopy.type}/${docRef.id}`);
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   }
 
   if (loading) {
@@ -152,69 +151,132 @@ export default function ShareNotes() {
 
   return (
     <main>
-      <Header />
-      <div className="max-w-md px-2 mx-auto">
-        <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3">
-          Share a Note
-        </h1>
-        <form onSubmit={onSubmit}>
-          <p className="block mb-2 font-semibold text-blue-800">Title</p>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={onChange}
-            placeholder="Title"
-            maxLength="32"
-            required
-            className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-sky-100 focus:border-sky-600 mb-3"
-          />
-
-          <p className="block mb-2 font-semibold text-blue-800">User Name</p>
-          <input
-            type="text"
-            id="username"
-            value={formData.username}
-            placeholder="Name"
-            maxLength="32"
-            required
-            className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-sky-100 focus:border-sky-600 mb-3"
-          />
-
-          <p className="block mb-2 font-semibold text-blue-800">Course Code</p>
-          <input
-            type="text"
-            id="coursecode"
-            value={coursecode}
-            onChange={onChange}
-            placeholder="Course code (ex. SE308)"
-            required
-            className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-sky-100 focus:border-sky-600 mb-3"
-          />
-
-          <div className="mb-6">
-            <p className="block mb-2 font-semibold text-blue-800">Notes</p>
-            <p className="text-gray-600">
-              The first image will be the cover (max 6)
-            </p>
-            <input
-              type="file"
-              id="notes"
-              onChange={onChange}
-              accept=".jpg,.png,.jpeg,.pdf"
-              multiple
-              required
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-sky-100 focus:border-sky-600 mb-3"
-            />
-          </div>
-          <button
-            type="submit"
-            className="mb-6 w-full px-7 py-3 bg-sky-600 text-white font-medium text-m uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out"
-          >
-            Share
-          </button>
-        </form>
+  <Header />
+  <div className="max-w-md px-4 mx-auto">
+    <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3">
+      Share a Note
+    </h1>
+    <form onSubmit={onSubmit}>
+      <div className="mb-6">
+        <label htmlFor="username" className="block mb-2 font-semibold text-blue-800">
+          User Name
+        </label>
+        <input
+          type="text"
+          id="username"
+          value={formData.username}
+          placeholder="Name"
+          maxLength="32"
+          required
+          className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3"
+          readOnly
+        />
       </div>
-    </main>
+
+      <div className="mb-6">
+        <label htmlFor="notes" className="block mb-2 font-semibold text-blue-800">
+          Notes
+        </label>
+        <p className="text-gray-600">
+          The first image will be the cover (max 6)
+        </p>
+        <input
+          type="file"
+          id="notes"
+          onChange={onChange}
+          accept=".jpg,.png,.jpeg,.pdf"
+          multiple
+          required
+          className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3"
+        />
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="title" className="block mb-2 font-semibold text-blue-800">
+          Title
+        </label>
+        <input
+          type="text"
+          id="title"
+          value={title}
+          onChange={onChange}
+          placeholder="Title"
+          maxLength="32"
+          required
+          className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3"
+        />
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="description" className="block mb-2 font-semibold text-blue-800">
+          Description
+        </label>
+        <textarea
+          type="text"
+          id="description"
+          value={description}
+          onChange={onChange}
+          placeholder="Description"
+          required
+          className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3"
+        />
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="coursecode" className="block mb-2 font-semibold text-blue-800">
+          Course Code
+        </label>
+        <select
+          id="coursecode"
+          value={coursecode}
+          onChange={onChange}
+          required
+          className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded-t-none focus:outline-none focus:border-sky-600 mb-3 appearance-none origin-top rounded-b"
+        >
+          <option value="" disabled>
+            Choose a course code
+          </option>
+          <option>CS103</option>
+          <option>CS105</option>
+          <option>CS302</option>
+          <option>CS303</option>
+          <option>CS304</option>
+          <option>CS305</option>
+          <option>CS306</option>
+          <option>CS307</option>
+          <option>CS308</option>
+          <option>CS313</option>
+          <option>CS412</option>
+          <option>ENS101</option>
+          <option>ENS203</option>
+          <option>ENS309</option>
+          <option>ENS490</option>
+          <option>EE325</option>
+          <option>IE408</option>
+          <option>NS102</option>
+          <option>MATH101</option>
+          <option>MATH102</option>
+          <option>MATH201</option>
+          <option>MATH202</option>
+          <option>MATH203</option>
+          <option>MATH204</option>
+          <option>MATH205</option>
+          <option>SE211</option>
+          <option>SE302</option>
+          <option>SE322</option>
+          <option>SE308</option>
+        </select>
+      </div>
+      
+      <button
+        type="submit"
+        className="w-full px-7 py-3 bg-sky-600 text-white font-medium text-m uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out"
+      >
+        Share Note
+      </button>
+    </form>
+  </div>
+</main>
+
   );
 }
