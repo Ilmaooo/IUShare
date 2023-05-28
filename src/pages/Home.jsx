@@ -1,25 +1,25 @@
 import { Avatar } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState} from 'react';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { VscAccount } from "react-icons/vsc";
-import { BsSearch } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import 'firebase/compat/firestore';
+import SearchBar from "../components/SearchBar";
 
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleInputChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+  // const handleInputChange = (event) => {
+  //   setSearchTerm(event.target.value);
+  // };
 
-  const handleSearchSubmit = (event) => {
-    event.preventDefault();
-    // handle the user's search input here
-    console.log(searchTerm);
-  };
+  // const handleSearchSubmit = (event) => {
+  //   event.preventDefault();
+  //   // handle the user's search input here
+  //   console.log(searchTerm);
+  // };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -57,25 +57,11 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-1/2 mx-auto mt-10 ">
-        <form onSubmit={handleSearchSubmit}>
-          <div className="flex items-center border-b border-b-2 border-blue-500 py-2">
-            <input
-              className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={handleInputChange}
-            />
-            <button
-              className="flex-shrink-0 bg-blue-500 hover:bg-blue-700 border-blue-500 hover:border-blue-700 text-sm border-4 text-white py-1 px-2 rounded"
-              type="submit"
-            >
-              <BsSearch />
-            </button>
-          </div>
-        </form>
+      <div >
+         <SearchBar />
       </div>
+     
+      
 
       <div className="w-5/6 mx-auto mt-10 space-x-56 container">
         <div className="bg-white shadow-md rounded px-8 py-4">
