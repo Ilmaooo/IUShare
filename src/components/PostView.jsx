@@ -9,10 +9,10 @@ A single Post View that is used as a component in Profile page.
 
 */
 
-export default function PostView({ note}) {
+export default function PostView({ note, id }) {
   return (
     <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px] ">
-      <Link className="contents" to={`/category/${note.type}/${note.id}`}>
+      <Link className="contents" to={`/category/${note.type}/${id}`}>
         <img
           className="h-[150px] w-[150] object-cover hover:scale-105 transition-scale duration-200 ease-in"
           loading="lazy"
