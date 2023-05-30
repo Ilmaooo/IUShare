@@ -6,33 +6,33 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { useParams } from "react-router-dom";
 
-export default function CoursePage({ noteRef }) {
+export default function CoursePage() {
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
   const { coursecode } = useParams();
 
   useEffect(() => {
-    console.log("Coursecode:", coursecode);
+    console.log("Course code:", coursecode);
     async function fetchNotes() {
-      if (coursecode) {
-        const noteRef = collection(db, "listings");
-        const q = query(
-          noteRef,
-          where("coursecode", "==", coursecode),
-          orderBy("timestamp", "desc")
-        );
-        const querySnap = await getDocs(q);
-        let notes = [];
-
-        console.log("querysnap:", querySnap.docs.length);
-        querySnap.forEach((doc) => {
-          return notes.push({
-            id: doc.id,
-            data: doc.data(),
-          });
+      console.log("Fetching notes..."); // Log a message to indicate the fetchNotes function is executing
+      const noteRef = collection(db, "listings");
+      const q = query(
+        noteRef,
+        where("coursecode", "==", coursecode),
+        orderBy("timestamp", "desc")
+      );
+      const querySnap = await getDocs(q);
+      console.log("Query snapshot:", querySnap); // Log the query snapshot object
+      let notes = [];
+      querySnap.forEach((doc) => {
+        return notes.push({
+          id: doc.id,
+          data: doc.data(),
         });
-        setNotes(notes);
-      }
+      });
+      console.log("Fetched note:", notes);
+
+      setNotes(notes);
       setLoading(false);
     }
     fetchNotes();
