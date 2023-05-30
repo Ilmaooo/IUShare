@@ -15,9 +15,12 @@ export default function SinglePost() {
     async function fetchNote() {
       try {
         const docRef = doc(db, "listings", postId);
+        console.log("Post ID:", postId);
         const docSnap = await getDoc(docRef);
+        console.log("Document Snapshot:", docSnap);
         if (docSnap.exists()) {
           const postData = docSnap.data();
+          console.log("Post Data:", postData);
           if (docSnap.id === postId) {
             setNote(postData);
           }

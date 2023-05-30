@@ -53,7 +53,7 @@ export default function Profile() {
             >
               My Notes
             </h2>
-            <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5-">
+            <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {notes.map((note) => (
                 <PostView key={note.id} id={note.id} note={note.data} />
               ))}
