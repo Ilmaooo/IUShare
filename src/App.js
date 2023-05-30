@@ -29,10 +29,10 @@ function App() {
           <Route path="/additional-info" element={<AdditionalInfoForm />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/share-notes" element={<ShareNotes />} />
-          <Route path="/category/:categoryName" element={<CoursePage />} />
+          <Route path="/category/:coursecode" element={<CoursePage />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route
-            path="/category/:categoryName/:postId"
+            path="/category/:coursecode/:postId"
             element={<SinglePost />}
           />
         </Routes>

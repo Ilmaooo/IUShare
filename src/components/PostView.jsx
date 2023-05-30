@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import defaultpic from "../img/open-book.png";
+import { collection, doc } from "firebase/firestore";
+import { db } from "../firebase";
 //import post from "../img/post-view.png";
 
 /*
@@ -12,12 +14,11 @@ A single Post View that is used as a component in Profile page.
 export default function PostView({ note, id }) {
   return (
     <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px] ">
-      <Link className="contents" to={`/category/${note.type}/${id}`}>
+      <Link className="contents" to={`/category/${note.coursecode}/${id}`}>
         <img
           className="h-[150px] w-[150] object-cover hover:scale-105 transition-scale duration-200 ease-in"
           loading="lazy"
           src={defaultpic}
-          onError={defaultpic}
           alt="defaultpic"
         />
 
@@ -31,7 +32,7 @@ export default function PostView({ note, id }) {
           <h2 className="text-xl font-bold text-[#005696]">{note.username}</h2>
           <h2 className="font-bold underline">{note.title}</h2>
           <p>{note.description}</p>
-          <p>{note.courseName}</p>
+          <p>{note.coursecode}</p>
         </div>
       </Link>
     </li>

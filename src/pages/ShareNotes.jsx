@@ -129,6 +129,7 @@ export default function ShareNotes() {
       noteUrls,
       timestamp: serverTimestamp(),
       userRef: auth.currentUser.uid,
+      coursecode: formData.coursecode,
     };
     delete formDataCopy.notes;
     console.log("data Form Copy");
@@ -142,7 +143,7 @@ export default function ShareNotes() {
     console.log("success");
 
     toast.success("Note created");
-    navigate(`/home`);
+    navigate(`/category/${formDataCopy.coursecode}/${docRef.id}`);
   }
 
   if (loading) {
