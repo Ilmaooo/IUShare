@@ -12,6 +12,7 @@ const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isInputFocused, setInputFocused] = useState(false);
 
   useEffect(() => {
     const handleSearch = async () => {
@@ -48,6 +49,14 @@ const SearchBar = () => {
     console.log("Results", searchResults);
   };
 
+  const handleInputFocus = () => {
+    setInputFocused(true);
+  };
+
+  const handleInputBlur = () => {
+    setInputFocused(false);
+  };
+
   return (
     <div className="w-1/2 mx-auto mt-10 relative ">
       <form onSubmit={handleSubmit} className="relative">
@@ -75,6 +84,8 @@ const SearchBar = () => {
           placeholder="Search for Notes...."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={handleInputFocus} // Add onFocus event handler
+          onBlur={handleInputBlur} // Add onBlur event handler
         />
         <button
           type="submit"
@@ -96,6 +107,13 @@ const SearchBar = () => {
               })}
             </ul>
           </>
+        )}
+
+         {/* Render "No results found" message */}
+     {!loading && searchResults.length === 0 && isInputFocused && (
+          <p className="text-gray-600 dark:text-gray-400">
+            No results found.
+          </p>
         )}
       </div>
     </div>
