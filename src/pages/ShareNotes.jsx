@@ -41,7 +41,7 @@ export default function ShareNotes() {
     } else {
       setFormData((prevState) => ({
         ...prevState,
-        [e.target.id]: e.target.value,
+        [e.target.id]: e.target.value.toLowerCase(),
       }));
     }
   }

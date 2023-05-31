@@ -20,7 +20,7 @@ const SearchBar = () => {
         const collectionRef = collection(db, "listings");
         const q = query(
           collectionRef,
-          where("title", ">=", searchQuery),
+          where("title", ">=", searchQuery.toLocaleLowerCase()),
           orderBy("title")
         );
         const snapshot = await getDocs(q);
