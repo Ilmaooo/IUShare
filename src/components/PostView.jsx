@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import defaultpic from "../img/open-book.png";
-import { collection, doc } from "firebase/firestore";
-import { db } from "../firebase";
+
 //import post from "../img/post-view.png";
 
 /*
@@ -30,8 +29,10 @@ export default function PostView({ note, id }) {
         </Moment>
         <div className="p-4">
           <h2 className="text-xl font-bold text-[#005696]">{note.username}</h2>
-          <h2 className="font-bold underline">{note.title}</h2>
-          <p>{note.description}</p>
+          <h2 className="font-bold underline">
+            {note.title.substring(0, 25)}...
+          </h2>
+          <p>{note.description.substring(0, 25)}...</p>
           <p>{note.coursecode}</p>
         </div>
       </Link>
