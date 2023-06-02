@@ -25,8 +25,9 @@ export default function ShareNotes() {
     username: "",
     notes: [],
     coursecode: "",
+    rating: 0,
   });
-  const { title, description, username, notes, coursecode } = formData;
+  const { title, description, username, notes, coursecode, rating } = formData;
 
   if (currentUser) {
     formData.username = currentUser.displayName || currentUser.email;
@@ -41,7 +42,7 @@ export default function ShareNotes() {
     } else {
       setFormData((prevState) => ({
         ...prevState,
-        [e.target.id]: e.target.value.toLowerCase(),
+        [e.target.id]: e.target.value,
       }));
     }
   }
@@ -131,6 +132,7 @@ export default function ShareNotes() {
       userRef: auth.currentUser.uid,
       coursecode: formData.coursecode,
     };
+
     delete formDataCopy.notes;
     console.log("data Form Copy");
     console.log(formDataCopy);
@@ -153,103 +155,103 @@ export default function ShareNotes() {
   return (
     <main>
       <Header />
-      <div className="max-w-md px-4 mx-auto">
-        <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3">
+      <div className='max-w-md px-4 mx-auto'>
+        <h1 className='text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3'>
           Share a Note
         </h1>
         <form onSubmit={onSubmit}>
-          <div className="mb-6">
+          <div className='mb-6'>
             <label
-              htmlFor="username"
-              className="block mb-2 font-semibold text-blue-800"
+              htmlFor='username'
+              className='block mb-2 font-semibold text-blue-800'
             >
               User Name
             </label>
             <input
-              type="text"
-              id="username"
+              type='text'
+              id='username'
               value={formData.username}
-              placeholder="Name"
-              maxLength="32"
+              placeholder='Name'
+              maxLength='32'
               required
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3"
+              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3'
               readOnly
             />
           </div>
 
-          <div className="mb-6">
+          <div className='mb-6'>
             <label
-              htmlFor="notes"
-              className="block mb-2 font-semibold text-blue-800"
+              htmlFor='notes'
+              className='block mb-2 font-semibold text-blue-800'
             >
               Notes
             </label>
-            <p className="text-gray-600">
+            <p className='text-gray-600'>
               The first image will be the cover (max 6)
             </p>
             <input
-              type="file"
-              id="notes"
+              type='file'
+              id='notes'
               onChange={onChange}
-              accept=".jpg,.png,.jpeg,.pdf"
+              accept='.jpg,.png,.jpeg,.pdf'
               multiple
               required
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3"
+              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3'
             />
           </div>
 
-          <div className="mb-6">
+          <div className='mb-6'>
             <label
-              htmlFor="title"
-              className="block mb-2 font-semibold text-blue-800"
+              htmlFor='title'
+              className='block mb-2 font-semibold text-blue-800'
             >
               Title
             </label>
             <input
-              type="text"
-              id="title"
+              type='text'
+              id='title'
               value={title}
               onChange={onChange}
-              placeholder="Title"
-              maxLength="32"
+              placeholder='Title'
+              maxLength='32'
               required
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3"
+              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3'
             />
           </div>
 
-          <div className="mb-6">
+          <div className='mb-6'>
             <label
-              htmlFor="description"
-              className="block mb-2 font-semibold text-blue-800"
+              htmlFor='description'
+              className='block mb-2 font-semibold text-blue-800'
             >
               Description
             </label>
             <textarea
-              type="text"
-              id="description"
+              type='text'
+              id='description'
               value={description}
               onChange={onChange}
-              placeholder="Description"
+              placeholder='Description'
               required
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3"
+              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3'
             />
           </div>
 
-          <div className="mb-6">
+          <div className='mb-6'>
             <label
-              htmlFor="coursecode"
-              className="block mb-2 font-semibold text-blue-800"
+              htmlFor='coursecode'
+              className='block mb-2 font-semibold text-blue-800'
             >
               Course Code
             </label>
             <select
-              id="coursecode"
+              id='coursecode'
               value={coursecode}
               onChange={onChange}
               required
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded-t-none focus:outline-none focus:border-sky-600 mb-3 appearance-none origin-top rounded-b"
+              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded-t-none focus:outline-none focus:border-sky-600 mb-3 appearance-none origin-top rounded-b'
             >
-              <option value="" disabled>
+              <option value='' disabled>
                 Choose a course code
               </option>
               <option>CS103</option>
@@ -286,8 +288,8 @@ export default function ShareNotes() {
           </div>
 
           <button
-            type="submit"
-            className="w-full px-7 py-3 bg-sky-600 text-white font-medium text-m uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out"
+            type='submit'
+            className='w-full px-7 py-3 bg-sky-600 text-white font-medium text-m uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out'
           >
             Share Note
           </button>

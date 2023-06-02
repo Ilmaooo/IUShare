@@ -15,11 +15,13 @@ export default function CoursePage() {
   useEffect(() => {
     console.log("Course code:", coursecode);
     async function fetchNotes() {
+      setLoading(true);
+      setNotes([]); //Clears the notes state to avoid seeing "No notes found" message for a millisecond before displaying new notes
       console.log("Fetching notes..."); // Log a message to indicate the fetchNotes function is executing
       const noteRef = collection(db, "listings");
       const q = query(
         noteRef,
-        where("coursecode", "==", coursecode),
+        where("coursecode", "==", coursecode.toUpperCase()),
         orderBy("timestamp", "desc")
       );
       const querySnap = await getDocs(q);
@@ -49,18 +51,18 @@ export default function CoursePage() {
 
       <div>
         {!loading && notes.length > 0 && (
-          <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5-">
+          <ul className='sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5-'>
             {notes.map((note, id) => (
               <PostView note={note} id={note.id} key={note.id} />
             ))}
           </ul>
         )}
         {!loading && notes.length === 0 && (
-          <div className="fixed inset-0 bg-sky-100 flex items-center justify-center flex-col">
-            <p className="font-mono text-3xl text-blue-900 font-thin max-w-screen-2xl">
+          <div className='fixed inset-0 bg-sky-100 flex items-center justify-center flex-col'>
+            <p className='font-mono text-3xl text-blue-900 font-thin max-w-screen-2xl'>
               No notes found for the specified course code.
             </p>
-            <img src={notfound} alt="error" className="mt-4 h-80" />
+            <img src={notfound} alt='error' className='mt-4 h-80' />
           </div>
         )}
       </div>

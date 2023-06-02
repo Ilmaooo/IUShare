@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Spinner from "../components/Spinner";
 import { db } from "../firebase";
 import { toast } from "react-toastify";
+import StarRating from "../components/StarRating";
 
 export default function SinglePost() {
   const [note, setNote] = useState(null);
@@ -48,6 +49,7 @@ export default function SinglePost() {
         <Header />
         <h1>{note.title}</h1>
         <h1>{note.username}</h1>
+        <StarRating />
       </section>
     </>
   );
