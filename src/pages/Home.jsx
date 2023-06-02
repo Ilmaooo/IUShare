@@ -1,25 +1,49 @@
 import { Avatar } from "@mui/material";
-import React, { useState} from 'react';
+import React, { useEffect, useState } from "react";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { VscAccount } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
-import 'firebase/compat/firestore';
+import "firebase/compat/firestore";
 import SearchBar from "../components/SearchBar";
+import { getAuth } from "firebase/auth";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import { db } from "../firebase";
+import PostView from "../components/PostView";
 
 export default function Home() {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth();
 
-  // const handleInputChange = (event) => {
-  //   setSearchTerm(event.target.value);
-  // };
+  useEffect(() => {
+    async function fetchNotes() {
+      try {
+        const noteRef = collection(db, "listings");
+        const q = query(
+          noteRef,
+          where("userRef", "!=", auth.currentUser.uid),
+          orderBy("userRef"),
+          orderBy("timestamp", "desc")
+        );
+        const querySnap = await getDocs(q);
+        const notesData = querySnap.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }));
+        setNotes(notesData);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching notes:", error);
+      }
+    }
 
-  // const handleSearchSubmit = (event) => {
-  //   event.preventDefault();
-  //   // handle the user's search input here
-  //   console.log(searchTerm);
-  // };
+    if (auth.currentUser) {
+      fetchNotes();
+    }
+  }, [auth.currentUser]);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,7 +56,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <Header />
-      <div className="bg-blue-300 ">
+      <div className="bg-blue-300">
         <div className="justify-self-start float-left inset-y-0 left-0 p-4">
           <nav className="float-left inset-y-0 left-0 p-4 text-center">
             <Avatar alt="User Avatar" onClick={handleClick}>
@@ -45,7 +69,7 @@ export default function Home() {
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem onClick={handleClose}>
-                <Link to="/">Sing-out</Link>
+                <Link to="/">Sign out</Link>
               </MenuItem>
             </Menu>
           </nav>
@@ -57,27 +81,25 @@ export default function Home() {
         </div>
       </div>
 
-      <div >
-         <SearchBar />
+      <div>
+        <SearchBar />
       </div>
-     
-      
 
-      <div className="w-5/6 mx-auto mt-10 space-x-56 container">
-        <div className="bg-white shadow-md rounded px-8 py-4">
-          <h3 className="text-lg font-bold mb-4">Top Rated Shared Note</h3>
-          <hr className="mb-4" />
-          <div className="flex items-center">
-            <div className="w-16 h-16 bg-gray-300 rounded-full mr-4"></div>
-            <div className="flex-1">
-              <h4 className="text-lg font-bold mb-2">Note Title</h4>
-              <p className="text-gray-700 text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce
-                consequat euismod sapien, vel accumsan nisl vestibulum et.
-              </p>
-            </div>
-          </div>
-        </div>
+      <div className="max-w-6xl px-3 mt-6 mx-auto">
+        {!loading && notes.length > 0 ? (
+          <>
+            <h2 className="text-4xl text-center font-semibold font-[Poppins] text-[#005696] mb-10">
+              Top rated notes
+            </h2>
+            <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {notes.map((note) => (
+                <PostView key={note.id} id={note.id} note={note.data} />
+              ))}
+            </ul>
+          </>
+        ) : (
+          <p>No notes found.</p>
+        )}
       </div>
     </div>
   );
