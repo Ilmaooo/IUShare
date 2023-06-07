@@ -50,17 +50,14 @@ function UserInfo() {
   }
 
   return (
-    <div className="flex justify-end mr-5">
-      <div className="font-semibold text-blue-800 text-xl font-[Poppins]tracking-wide mr-3 mt-2 text-right">
-        <h3>{userData.name}</h3>
-        <h3>{userData.major}</h3>
-        <h3>{userData.yearOfStudy}</h3>
+    
+    <div className="border border-gray-300 rounded-lg p-4 absolute top-32 right-12">
+      <div className="text-blue-800 text-xl font-playfair-display tracking-wide mr-3 mb-2 text-right">
+        <h3 className="transition-colors duration-300 hover:text-blue-900">{userData.name}</h3>
+        <h3 className="transition-colors duration-300 hover:text-blue-900">{userData.major}</h3>
+        <h3 className="transition-colors duration-300 hover:text-blue-900">{userData.yearOfStudy}</h3>
       </div>
-      <img
-        src={userPhoto}
-        alt="pic"
-        className="md:cursor-pointer h-24 mr-2 rounded-full top-20 right-20 w-24 my-2"
-      />
+      <hr className="border-t-2 border-gray-300 mt-4 mx-auto w-16" />
     </div>
   );
 }
