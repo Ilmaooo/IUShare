@@ -3,7 +3,7 @@ import { FaStar } from "react-icons/fa";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import { db } from "../firebase";
-
+import { collection } from "firebase/firestore"; 
 function StarRating() {
   const [rating, setRating] = useState(null);
   const [hover, setHover] = useState(null);
@@ -11,7 +11,7 @@ function StarRating() {
   const handleRatingClick = (ratingValue) => {
     setRating(ratingValue);
 
-    // Update rating in Firestore
+    // Update rating in Firestorez
     db.collection("listings")
       .doc("unique-rating-document-id")
       .update({

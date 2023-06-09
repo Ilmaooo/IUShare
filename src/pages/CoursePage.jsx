@@ -31,12 +31,12 @@ export default function CoursePage() {
         ...doc.data(),
       }));
 
-      querySnap.forEach((doc) => {
-        return notes.push({
-          id: doc.id,
-          ...doc.data(),
-        });
-      });
+      // querySnap.forEach((doc) => {
+      //   return notes.push({
+      //     id: doc.id,
+      //     ...doc.data(),
+      //   });
+      // });
       console.log("Fetched note:", notes);
 
       setNotes(notes);

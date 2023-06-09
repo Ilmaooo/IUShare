@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 import { collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { VscCloudUpload } from "react-icons/vsc";
 
 export default function ShareNotes() {
   const navigate = useNavigate();
@@ -27,11 +28,14 @@ export default function ShareNotes() {
     coursecode: "",
     rating: 0,
   });
-  const { title, description, username, notes, coursecode, rating } = formData;
 
+  const { title, description, username, notes, coursecode, rating } = formData;
+  
   if (currentUser) {
     formData.username = currentUser.displayName || currentUser.email;
   }
+
+  const [uploadedFiles, setUploadedFiles] = useState([]);
 
   function onChange(e) {
     if (e.target.files) {
@@ -73,7 +77,7 @@ export default function ShareNotes() {
         const filename = `${auth.currentUser.uid}-${note.name}-${uuidv4()}`;
         const storageRef = ref(storage, filename);
         const uploadTask = uploadBytesResumable(storageRef, note);
-
+     
         uploadTask.on(
           "state_changed",
           (snapshot) => {
@@ -152,43 +156,132 @@ export default function ShareNotes() {
     return <Spinner />;
   }
 
+
   return (
-    <main>
+<main>
       <Header />
-      <div className='max-w-md px-4 mx-auto'>
+      <div className='max-w-md px-4 mx-auto font-serif '>
         <h1 className='text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3'>
           Share a Note
         </h1>
-        <form onSubmit={onSubmit}>
-          <div className='mb-6'>
-            <label
-              htmlFor='username'
-              className='block mb-2 font-semibold text-blue-800'
-            >
-              User Name
-            </label>
-            <input
-              type='text'
-              id='username'
-              value={formData.username}
-              placeholder='Name'
-              maxLength='32'
-              required
-              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3'
-              readOnly
-            />
-          </div>
+        <form className="space-x-4" onSubmit={onSubmit}>
+          <div className="absolute left-0 px-4 mx-8 w-1/2 mr-4 ml-16">
+            <div className='mb-3 w-3/4 ml-6'>
+              <label
+                htmlFor='username'
+                className='block mb-2 font-semibold text-blue-500 '
+              >
+                User Name
+              </label>
+              <input
+                type='text'
+                id='username'
+                value={formData.username}
+                placeholder='Name'
+                maxLength='32'
+                required
+                className='w-full h-14 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded  focus:outline-none focus:border-sky-600 mb-3'
+                readOnly
+              />
+            </div>
 
-          <div className='mb-6'>
-            <label
+            <div className='mb-3 w-3/4 ml-6'>
+              <label
+                htmlFor='title'
+                className='block mb-2 font-semibold text-blue-500'
+              >
+                Title
+              </label>
+              <input
+                type='text'
+                id='title'
+                value={title}
+                onChange={onChange}
+                placeholder='Title'
+                maxLength='32'
+                required
+                className='w-full h-14 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded focus:outline-none focus:border-sky-600  focus:bg-slate-200 mb-3'
+              />
+            </div>
+
+            <div className='mb-3 w-3/4 ml-6'>
+              <label
+                htmlFor='description'
+                className='block mb-2 font-semibold text-blue-500'
+              >
+                Description
+              </label>
+              <textarea
+                type='text'
+                id='description'
+                value={description}
+                onChange={onChange}
+                placeholder='Description'
+                required
+                className='w-full h-14 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded focus:outline-none focus:bg-slate-200 focus:border-sky-600 mb-3'
+              />
+            </div>
+
+            <div className='mb-3 w-3/4 ml-6'>
+              <label
+                htmlFor='coursecode'
+                className='block mb-2 font-semibold text-blue-500'
+              >
+                Course Code
+              </label>
+              <select
+                id='coursecode'
+                value={coursecode}
+                onChange={onChange}
+                required
+                className='w-full h-14  px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg  border-gray-300  focus:outline-none focus:bg-slate-200 focus:border-sky-600 mb-3 appearance-none origin-top '
+              >
+                <option value='' disabled>
+                  Choose a course code
+                </option>
+                <option>CS103</option>
+                <option>CS105</option>
+                <option>CS302</option>
+                <option>CS303</option>
+                <option>CS304</option>
+                <option>CS305</option>
+                <option>CS306</option>
+                <option>CS307</option>
+                <option>CS308</option>
+                <option>CS310</option>
+                <option>CS313</option>
+                <option>CS412</option>
+                <option>ENS101</option>
+                <option>ENS203</option>
+                <option>ENS309</option>
+                <option>ENS490</option>
+                <option>EE325</option>
+                <option>IE408</option>
+                <option>NS102</option>
+                <option>MATH101</option>
+                <option>MATH102</option>
+                <option>MATH201</option>
+                <option>MATH202</option>
+                <option>MATH203</option>
+                <option>MATH204</option>
+                <option>MATH205</option>
+                <option>SE308</option>
+              </select>
+            </div>
+          </div>
+          <div className="absolute right-0 px-8 py-4 mx-8 my-4 w-1/2 justify-center  ml-4">
+             <div className=" px-8 py-4 place-items-center flex flex-col justify-center items-center w-full h-64 bg-stone-100 border-2 border-dashed border-slate-400 hover:border-indigo-300 rounded-xl mb-16 ">
+             <label
               htmlFor='notes'
-              className='block mb-2 font-semibold text-blue-800'
+              className='block font-semibold text-blue-800'
             >
-              Notes
+             Upload you Notes 
             </label>
             <p className='text-gray-600'>
               The first image will be the cover (max 6)
             </p>
+            <VscCloudUpload className="text-4xl"/>
+            <div  className="flex items-center justify-center">
             <input
               type='file'
               id='notes'
@@ -196,105 +289,32 @@ export default function ShareNotes() {
               accept='.jpg,.png,.jpeg,.pdf'
               multiple
               required
-              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3'
+              className='w-full h-full opacity-0 cursor-pointer'
+              placeholder=" Upload you Notes "
             />
-          </div>
-
-          <div className='mb-6'>
-            <label
-              htmlFor='title'
-              className='block mb-2 font-semibold text-blue-800'
-            >
-              Title
-            </label>
-            <input
-              type='text'
-              id='title'
-              value={title}
-              onChange={onChange}
-              placeholder='Title'
-              maxLength='32'
-              required
-              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3'
-            />
-          </div>
-
-          <div className='mb-6'>
-            <label
-              htmlFor='description'
-              className='block mb-2 font-semibold text-blue-800'
-            >
-              Description
-            </label>
-            <textarea
-              type='text'
-              id='description'
-              value={description}
-              onChange={onChange}
-              placeholder='Description'
-              required
-              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded focus:outline-none focus:border-sky-600 mb-3'
-            />
-          </div>
-
-          <div className='mb-6'>
-            <label
-              htmlFor='coursecode'
-              className='block mb-2 font-semibold text-blue-800'
-            >
-              Course Code
-            </label>
-            <select
-              id='coursecode'
-              value={coursecode}
-              onChange={onChange}
-              required
-              className='w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded-t-none focus:outline-none focus:border-sky-600 mb-3 appearance-none origin-top rounded-b'
-            >
-              <option value='' disabled>
-                Choose a course code
-              </option>
-              <option>CS103</option>
-              <option>CS105</option>
-              <option>CS302</option>
-              <option>CS303</option>
-              <option>CS304</option>
-              <option>CS305</option>
-              <option>CS306</option>
-              <option>CS307</option>
-              <option>CS308</option>
-              <option>CS310</option>
-              <option>CS313</option>
-              <option>CS412</option>
-              <option>ENS101</option>
-              <option>ENS203</option>
-              <option>ENS309</option>
-              <option>ENS490</option>
-              <option>EE325</option>
-              <option>IE408</option>
-              <option>NS102</option>
-              <option>MATH101</option>
-              <option>MATH102</option>
-              <option>MATH201</option>
-              <option>MATH202</option>
-              <option>MATH203</option>
-              <option>MATH204</option>
-              <option>MATH205</option>
-              <option>SE211</option>
-              <option>SE302</option>
-              <option>SE322</option>
-              <option>SE308</option>
-            </select>
-          </div>
-
-          <button
+            </div>
+            <div className="">
+             {notes.length > 0 && (
+               <span className="ml-2 text-green-600">Files uploaded successfully! , number of files uploaded {notes.length}, {notes.type}</span>               
+             )} 
+           </div>   
+           </div>
+            <button
             type='submit'
-            className='w-full px-7 py-3 bg-sky-600 text-white font-medium text-m uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out'
+            className='bottom-0 mt-8 w-full my-8 px-8 py-3 bg-blue-400 text-white font-medium rounded-lg text-m uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out'
           >
             Share Note
           </button>
+          </div>
+         
+      
         </form>
       </div>
     </main>
   );
 }
+
+
+
+
+
