@@ -56,7 +56,7 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <Header />
-      <div className="bg-blue-300">
+      <div className="bg-blue-300 ">
         <div className="justify-self-start float-left inset-y-0 left-0 p-4">
           <nav className="float-left inset-y-0 left-0 p-4 text-center">
             <Avatar alt="User Avatar" onClick={handleClick}>
@@ -67,7 +67,7 @@ export default function Home() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={handleClose} to="/prfile"><Link to="/profile">Profile</Link></MenuItem>
               <MenuItem onClick={handleClose}>
                 <Link to="/">Sign out</Link>
               </MenuItem>
@@ -81,7 +81,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div>
+      <div className="max-full">
         <SearchBar />
       </div>
 

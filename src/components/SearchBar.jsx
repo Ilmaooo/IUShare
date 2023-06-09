@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { collection, where, orderBy, getDocs, query } from "firebase/firestore";
 import { db } from "../firebase";
 import PostView from "./PostView";
+import {FrownTwoTone} from '@ant-design/icons';
 // import PostView from "../components/PostView";
 // import { BsSearch } from "react-icons/bs";
 
@@ -87,18 +88,21 @@ const SearchBar = () => {
           onFocus={handleInputFocus} // Add onFocus event handler
           onBlur={handleInputBlur} // Add onBlur event handler
         />
-        <button
+        {/* <button
           type="submit"
           className="text-white absolute right-2.5 top-1/2 transform -translate-y-1/2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           search
-        </button>
+        </button> */}
       </form>
 
-      <div className="max-w-6xl px-3 mt-6 mx-auto">
+      <div className=" m-8 max-w-6xl px-3 mt-6 mx-auto ">
+        <hr/>
         {!loading && searchResults.length > 0 && (
           <>
-            <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+             <h3 className="m-4 text-lg font-semibold text-blue-500">Search results </h3>
+             <hr/>
+            <ul className="sm:grid grid-cols-2 lg:grid-cols-3">
               {searchResults.map((result) => {
                 console.log("Post ID:", result.id);
                 return (
@@ -111,8 +115,8 @@ const SearchBar = () => {
 
          {/* Render "No results found" message */}
      {!loading && searchResults.length === 0 && isInputFocused && (
-          <p className="text-gray-600 dark:text-gray-400">
-            No results found.
+          <p className="text-gray-600 dark:text-gray-400 text-center m-4 text-m">
+           <FrownTwoTone /> No results found.<FrownTwoTone />
           </p>
         )}
       </div>
