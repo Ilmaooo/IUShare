@@ -152,14 +152,10 @@ export default function ShareNotes() {
     navigate(`/category/${formDataCopy.coursecode}/${docRef.id}`);
   }
 
-  if (loading) {
-    return <Spinner />;
-  }
-
-
   return (
 <main>
       <Header />
+      {loading && <Spinner className="bg-opacity-25"/> }
       <div className='max-w-md px-4 mx-auto font-serif '>
         <h1 className='text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3'>
           Share a Note
