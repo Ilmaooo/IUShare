@@ -33,7 +33,7 @@ export default function Home() {
         );
         const q2 = query(
           noteRef,
-          where("rating", ">", 3),
+          where("rating", ">", 4),
           orderBy("rating", "desc")
         );
         const querySnap1 = await getDocs(q1);
