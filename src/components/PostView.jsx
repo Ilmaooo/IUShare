@@ -3,24 +3,9 @@ import Moment from "react-moment";
 import { Link } from "react-router-dom";
 import defaultpic from "../img/open-book.png";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
-import StarRating from "./StarRating";
+import StarRating, { handleRatingUpdate } from "./StarRating";
 
 export default function PostView({ note, id }) {
-  const averageRating = Math.round(note.rating * 2) / 2; // Round the average rating to the nearest half value
-  const stars = [];
-  for (let i = 0; i < 5; i++) {
-    if (averageRating >= i + 1) {
-      // Full star
-      stars.push(<FaStar key={i} color="#ffc107" />);
-    } else if (averageRating >= i + 0.5) {
-      // Half star
-      stars.push(<FaStarHalfAlt key={i} color="#ffc107" />);
-    } else {
-      // Empty star
-      stars.push(<FaStar key={i} style={{ opacity: 0.5 }} color="#ffdd37" />);
-    }
-  }
-
   // Check if the note has any URLs
   const hasUrls = note.noteUrls && note.noteUrls.length > 0;
 
@@ -35,8 +20,8 @@ export default function PostView({ note, id }) {
     if (isPdf) {
       // Render the first page of the PDF
       return (
-        <div className="h-[150px] w-[150px] object-cover hover:scale-105 transition-scale duration-200 ease-in select-none">
-          <object data={firstUrl} type="application/pdf">
+        <div className='h-[150px] w-[150px] object-cover hover:scale-105 transition-scale duration-200 ease-in select-none'>
+          <object data={firstUrl} type='application/pdf'>
             {/* <img src={defaultpic} alt="defaultpic" /> */}
           </object>
         </div>
@@ -45,45 +30,48 @@ export default function PostView({ note, id }) {
       // Render the first image
       return (
         <img
-          className="h-[150px] w-[150px] object-cover hover:scale-105 transition-scale duration-200 ease-in"
-          loading="lazy"
+          className='h-[150px] w-[150px] object-cover hover:scale-105 transition-scale duration-200 ease-in'
+          loading='lazy'
           src={firstUrl}
-          alt="note-image"
+          alt='note-image'
         />
       );
     } else {
       // Render the default image
       return (
         <img
-          className="h-[150px] w-[150px] object-cover hover:scale-105 transition-scale duration-200 ease-in"
-          loading="lazy"
+          className='h-[150px] w-[150px] object-cover hover:scale-105 transition-scale duration-200 ease-in'
+          loading='lazy'
           src={defaultpic}
-          alt="defaultpic"
+          alt='defaultpic'
         />
       );
     }
   };
 
   return (
-    <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px] ">
-      <Link className="contents" to={`/category/${note.coursecode}/${id}`}>
+    <li className='relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px] '>
+      <Link className='contents' to={`/category/${note.coursecode}/${id}`}>
         {renderMedia()}
 
         <Moment
-          className="absolute top-2 left-2 bg-[#3377cc] text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg"
+          className='absolute top-2 left-2 bg-[#3377cc] text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg'
           fromNow
         >
           {note.timestamp?.toDate()}
         </Moment>
-        <div className="p-4">
-          <h2 className="text-xl font-bold text-[#005696]">{note.username}</h2>
-          <h2 className="font-bold underline">
+        <div className='p-4'>
+          <h2 className='text-xl font-bold text-[#005696]'>{note.username}</h2>
+          <h2 className='font-bold underline'>
             {note.title.substring(0, 25)}...
           </h2>
           <p>{note.description.substring(0, 25)}...</p>
           <p>{note.coursecode}</p>
           <div style={{ display: "flex" }}>
-            {stars} {/*displaying stars*/}
+            <StarRating
+              rating={note.rating}
+              onUpdateRating={handleRatingUpdate}
+            />
           </div>
         </div>
       </Link>

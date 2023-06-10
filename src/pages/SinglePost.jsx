@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 
-import StarRating from "../components/StarRating";
+import StarRating, { handleRatingUpdate } from "../components/StarRating";
 import { Document, Page, pdfjs } from "react-pdf";
 import { Carousel } from "antd";
 import { getAuth } from "firebase/auth";
@@ -19,7 +19,6 @@ export default function SinglePost() {
   const [note, setNote] = useState(null);
   const [loading, setLoading] = useState(true);
   const { postId } = useParams();
-  const auth = getAuth();
 
   const [numPages, setNumPages] = useState(null);
   const [pageNum, setPageNum] = useState(1);
@@ -165,6 +164,19 @@ export default function SinglePost() {
               Download
             </Button>
           </div>
+          <h1 className="text-2xl text-left font-semibold font-[Poppins] text-[#005696] my-4">
+            Shared By: {note.username}
+          </h1>
+          <h1 className="text-xl text-left font-semibold font-[Poppins] text-[#005696] my-4">
+            Course code: {note.coursecode.toUpperCase()}
+          </h1>
+          <StarRating
+            className="absolute right-0"
+            rating={note.rating}
+            onUpdateRating={(ratingValue) =>
+              handleRatingUpdate(note, setNote, postId, ratingValue)
+            }
+          />
         </section>
       </>
     </div>
