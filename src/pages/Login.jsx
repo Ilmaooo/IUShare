@@ -37,18 +37,19 @@ export default function LogIn() {
     }
   }
   return (
-    <section className="flex-row items-center justify-center min-h-screen bg-sky-100">
-      <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-8">
-        Welcome back to IUShare
-      </h1>
-      <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
+    <div className="flex items-center justify-center bg-gradient-to-r from-blue-200 to-violet-200 bg-sky-100 bg-stone-100">
+
+      <div className="flex min-h-screen justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
         <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
+         <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-4">
+           Welcome back to IUShare
+          </h1>
           <p className="mt-1 text-blue-900 font-thin text-4xl font-mono select-none">
             Don't Just Take Notes, Share Them - Join the IUS CS/SE Collaborative
             Learning Experience
           </p>
         </div>
-        <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20 mb-4 shadow-md overflow-hidden rounded-lg p-5 bg-white">
+        <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20 mb-4 shadow-md overflow-hidden rounded-lg p-5 bg-stone-100 backdrop-saturate-50 shadow-blue-500/50">
           <form onSubmit={onSubmit}>
             <label
               className="block mb-2 font-semibold text-blue-800"
@@ -82,12 +83,12 @@ export default function LogIn() {
               />
               {showPassword ? (
                 <AiFillEyeInvisible
-                  className="absolute right-3 top-3 text-xl cursor-pointer"
+                  className="absolute right-3 top-11 text-xl cursor-pointer"
                   onClick={() => setShowPassword((prevState) => !prevState)}
                 />
               ) : (
                 <AiFillEye
-                  className="absolute right-3 top-3 text-xl cursor-pointer"
+                  className="absolute right-3 top-11 text-xl cursor-pointer"
                   onClick={() => setShowPassword((prevState) => !prevState)}
                 />
               )}
@@ -124,6 +125,6 @@ export default function LogIn() {
           </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
