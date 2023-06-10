@@ -5,17 +5,24 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
-import { Viewer, SpecialZoomLevel } from "@react-pdf-viewer/core";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-// Import styles
-import "@react-pdf-viewer/core/lib/styles/index.css";
-import "@react-pdf-viewer/default-layout/lib/styles/index.css";
+
+import StarRating from "../components/StarRating";
+import { Document, Page, pdfjs } from "react-pdf";
+import { Carousel } from "antd";
+
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export default function SinglePost() {
   const [note, setNote] = useState(null);
   const [loading, setLoading] = useState(true);
   const { postId } = useParams();
-  const defaultLayoutPluginInstance = defaultLayoutPlugin();
+
+  const [numPages, setNumPages] = useState(null);
+  const [pageNum, setPageNum] = useState(1);
+
+  function onDocumentSuccess({ numPages }) {
+    setNumPages(numPages);
+  }
 
   useEffect(() => {
     async function fetchNote() {
@@ -84,31 +91,53 @@ export default function SinglePost() {
       <Header />
       <>
         <section className="w-full justify-center items-center p-8 m-6 pl-6">
-          <h1 className="text-4xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">{note.title}</h1>
-          <p className="text-1xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">{note.description}</p>
-          <div className="w-full h-max center bg-slate-50 border-slate-400">
-            {note.noteUrls.map((noteUrl, index) => (
-              <div key={index} className="self-center w-3/4 h-max border-2 border-slate-400 hover:border-slate-200">
-                {noteUrl.endsWith(".pdf") ? (
-                  <Viewer
-                    fileUrl={noteUrl}
-                    plugins={[
-                      defaultLayoutPluginInstance,
-                    ]}
-                    defaultScale={SpecialZoomLevel.PageFit}
-                  />
-                ) : (
-                  <img
-                    src={noteUrl}
-                    alt={`Note ${index + 1}`}
-                    style={{ width: "100%", height: "auto" }}
-                  />
-                )}
-              </div>
-            ))}
+          <h1 className="text-4xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">
+            {note.title}
+          </h1>
+          <p className="text-1xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">
+            {note.description}
+          </p>
+          <div className="w-3/4 h-max">
+            <Carousel className=" center border-slate-400" autoplay>
+              {note.noteUrls.map((noteUrl, index) => (
+                <div
+                  key={index}
+                  className="self-center w-3/4 h-max border-2 border-slate-400 hover:border-slate-200 h-96 overflow-auto"
+                >
+                  {noteUrl.includes(".pdf") ? (
+                    <div className="h-96 overflow-auto">
+                      <Document
+                        file={noteUrl}
+                        onLoadSuccess={onDocumentSuccess}
+                        //options={{ workerSrc: "/pdf.worker.js" }}
+                      >
+                        {Array.from(new Array(numPages), (el, index) => (
+                          <Page key={index + 1} pageNumber={index + 1} />
+                        ))}
+                      </Document>
+                    </div>
+                  ) : (
+                    <img
+                      src={noteUrl}
+                      alt={`Note ${index + 1}`}
+                      style={{ width: "100%" }}
+                    />
+                  )}
+                </div>
+              ))}
+            </Carousel>
           </div>
-          <h1 className="text-2xl text-left font-semibold font-[Poppins] text-[#005696] my-4">Shared By: {note.username}</h1>
-          <StarRating className="absolute right-0" rating={note.rating} onUpdateRating={handleRatingUpdate} />
+          <h1 className="text-2xl text-left font-semibold font-[Poppins] text-[#005696] my-4">
+            Shared By: {note.username}
+          </h1>
+          <h1 className="text-xl text-left font-semibold font-[Poppins] text-[#005696] my-4">
+            Course code: {note.coursecode.toUpperCase()}
+          </h1>
+          <StarRating
+            className="absolute right-0"
+            rating={note.rating}
+            onUpdateRating={handleRatingUpdate}
+          />
         </section>
       </>
     </div>
