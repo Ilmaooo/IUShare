@@ -12,8 +12,7 @@ import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import PostView from "../components/PostView";
 import { FcRating } from "react-icons/fc";
-import {StarTwoTone} from '@ant-design/icons';
-
+import { StarTwoTone } from "@ant-design/icons";
 
 export default function Home() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -71,24 +70,29 @@ export default function Home() {
   return (
     <div className="flex flex-col">
       <Header />
-      
-        <div className="justify-self-end float-right inset-y-0 right-0 px-6 py-8 bg-gradient-to-r from-blue-200 to-violet-200">
-          <div className=" grid justify-items-center">
-            <h2 className="text-4xl text-center font-semibold font-[Poppins] text-[#005696] mb-10">Share with others some notes</h2>
-            <button className="w-64 bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 text-white font-bold py-2 px-4 pr-2 rounded-xl ">
-               <Link to="/share-notes">Share Note</Link>
-            </button>
-          </div>
-          <div>
-            <SearchBar />
-          </div>
+
+      <div className="justify-self-end float-right inset-y-0 right-0 px-6 py-8 bg-gradient-to-r from-blue-200 to-violet-200">
+        <div className=" grid justify-items-center">
+          <h2 className="text-3xl text-center font-semibold font-[Poppins] text-[#005696] mb-10">
+            Embark on a journey of knowledge and share the brilliance of your
+            notes with others.
+          </h2>
+          <button className="w-64 bg-blue-500 hover:bg-gradient-to-r hover:from-blue-500 hover:to-purple-500 text-white font-bold py-2 px-4 pr-2 rounded-xl ">
+            <Link to="/share-notes">Share Note</Link>
+          </button>
         </div>
-      
+        <div>
+          <SearchBar />
+        </div>
+      </div>
+
       <div className="max-w-6xl px-3 mt-6 mx-auto mb-6">
         {!loading && topNotes.length > 0 ? (
           <>
             <fieldset class="border-t border-slate-400 mt-14">
-              <legend class="mx-auto px-4 font-[Poppins] text-[#005696] mb-10 text-4xl italic">Top Rated Notes</legend>
+              <legend class="mx-auto px-4 font-[Poppins] text-[#005696] mb-10 text-4xl italic">
+                Top Rated Notes
+              </legend>
             </fieldset>
             <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {topNotes.map((note) => (
@@ -106,8 +110,10 @@ export default function Home() {
       <div className="max-w-6xl px-3 mt-6 mx-auto mb-6">
         {!loading && notes.length > 0 ? (
           <>
-             <fieldset class="border-t border-slate-400 mt-14">
-              <legend class="mx-auto px-4 font-[Poppins] text-[#005696] mb-10 text-4xl italic">Some Notes</legend>
+            <fieldset class="border-t border-slate-400 mt-14">
+              <legend class="mx-auto px-4 font-[Poppins] text-[#005696] mb-10 text-4xl italic">
+                Some Notes
+              </legend>
             </fieldset>
             <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {notes.map((note) => (

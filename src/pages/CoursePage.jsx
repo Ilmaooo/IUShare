@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { useParams } from "react-router-dom";
-import { Result, Row, Col } from "antd";
+import { Result } from "antd";
 
 export default function CoursePage() {
   const [notes, setNotes] = useState([]);
@@ -45,13 +45,12 @@ export default function CoursePage() {
   }, [coursecode]);
 
   return (
-    <>
+    <section>
       <Header />
 
       <div>
         <h1 className="transition-colors duration-300 hover:text-blue-500 text-3xl text-center  font-playfair-display text-sky-600 mb-10 select-none cursor-pointer py-8 ">
-          Beyond the Textbooks: {coursecode.toUpperCase()} Revealed – Igniting
-          Curiosity for {coursecode.toUpperCase()}
+          Unleash Your Potential in {coursecode.toUpperCase()}
         </h1>
         {!loading && notes.length > 0 && (
           <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5-">
@@ -68,6 +67,6 @@ export default function CoursePage() {
           />
         )}
       </div>
-    </>
+    </section>
   );
 }

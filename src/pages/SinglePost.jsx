@@ -10,6 +10,8 @@ import StarRating from "../components/StarRating";
 import { Document, Page, pdfjs } from "react-pdf";
 import { Carousel } from "antd";
 import { getAuth } from "firebase/auth";
+import { Button } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -92,26 +94,34 @@ export default function SinglePost() {
       });
   };
 
+  const handleDownload = () => {
+    const downloadLink = document.createElement("a");
+    downloadLink.href = note.noteUrls[0];
+    downloadLink.download = `Note_${postId}`;
+    downloadLink.target = "_blank";
+    downloadLink.click();
+  };
+
   return (
-    <div className='flex flex-col'>
+    <div className="flex flex-col">
       <Header />
       <>
-        <section className='w-full justify-center items-center p-8 m-6 pl-6'>
-          <h1 className='text-4xl text-left font-semibold font-[Poppins] text-[#005696] mb-4'>
+        <section className="w-full justify-center items-center p-8 m-6 pl-6">
+          <h1 className="text-4xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">
             {note.title}
           </h1>
-          <p className='text-1xl text-left font-semibold font-[Poppins] text-[#005696] mb-4'>
+          <p className="text-1xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">
             {note.description}
           </p>
-          <div className='w-3/4 h-max'>
-            <Carousel className=' center border-slate-400' autoplay>
+          <div className="w-3/4 h-max mb-2">
+            <Carousel className=" center border-slate-400" autoplay>
               {note.noteUrls.map((noteUrl, index) => (
                 <div
                   key={index}
-                  className='self-center w-3/4 border-2 border-slate-400 hover:border-slate-200 h-96 overflow-auto'
+                  className="self-center w-3/4 border-2 border-slate-400 hover:border-slate-200 h-96 overflow-auto"
                 >
                   {noteUrl.includes(".pdf") ? (
-                    <div className='h-96 overflow-auto'>
+                    <div className="h-96 overflow-auto">
                       <Document
                         file={noteUrl}
                         onLoadSuccess={onDocumentSuccess}
@@ -133,17 +143,28 @@ export default function SinglePost() {
               ))}
             </Carousel>
           </div>
-          <h1 className='text-2xl text-left font-semibold font-[Poppins] text-[#005696] my-4'>
-            Shared By: {note.username}
-          </h1>
-          <h1 className='text-xl text-left font-semibold font-[Poppins] text-[#005696] my-4'>
-            Course code: {note.coursecode.toUpperCase()}
-          </h1>
-          <StarRating
-            className='absolute right-0'
-            rating={note.rating}
-            onUpdateRating={handleRatingUpdate}
-          />
+          <div className="flex justify-between w-3/4">
+            <div>
+              <h1 className="text-2xl text-left font-semibold font-[Poppins] text-[#005696] my-4">
+                Shared By: {note.username}
+              </h1>
+              <h1 className="text-xl text-left font-semibold font-[Poppins] text-[#005696] my-4">
+                Course code: {note.coursecode.toUpperCase()}
+              </h1>
+              <StarRating
+                className="absolute right-0"
+                rating={note.rating}
+                onUpdateRating={handleRatingUpdate}
+              />
+            </div>
+            <Button
+              type="default"
+              icon={<DownloadOutlined />}
+              onClick={handleDownload}
+            >
+              Download
+            </Button>
+          </div>
         </section>
       </>
     </div>
