@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import StarRating from "../components/StarRating";
 import { Document, Page, pdfjs } from "react-pdf";
 import { Carousel } from "antd";
+import { getAuth } from "firebase/auth";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -16,6 +17,7 @@ export default function SinglePost() {
   const [note, setNote] = useState(null);
   const [loading, setLoading] = useState(true);
   const { postId } = useParams();
+  const auth = getAuth();
 
   const [numPages, setNumPages] = useState(null);
   const [pageNum, setPageNum] = useState(1);
@@ -59,6 +61,10 @@ export default function SinglePost() {
   }
 
   const handleRatingUpdate = (ratingValue) => {
+    if (note.userRef === auth.currentUser.uid) {
+      console.log("Cannot rate your own note.");
+      return;
+    }
     // Calculate new average rating
     const currentRating = note.rating || 0;
     const totalRatings = note.totalRatings || 0;
@@ -87,25 +93,25 @@ export default function SinglePost() {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className='flex flex-col'>
       <Header />
       <>
-        <section className="w-full justify-center items-center p-8 m-6 pl-6">
-          <h1 className="text-4xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">
+        <section className='w-full justify-center items-center p-8 m-6 pl-6'>
+          <h1 className='text-4xl text-left font-semibold font-[Poppins] text-[#005696] mb-4'>
             {note.title}
           </h1>
-          <p className="text-1xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">
+          <p className='text-1xl text-left font-semibold font-[Poppins] text-[#005696] mb-4'>
             {note.description}
           </p>
-          <div className="w-3/4 h-max">
-            <Carousel className=" center border-slate-400" autoplay>
+          <div className='w-3/4 h-max'>
+            <Carousel className=' center border-slate-400' autoplay>
               {note.noteUrls.map((noteUrl, index) => (
                 <div
                   key={index}
-                  className="self-center w-3/4 h-max border-2 border-slate-400 hover:border-slate-200 h-96 overflow-auto"
+                  className='self-center w-3/4 border-2 border-slate-400 hover:border-slate-200 h-96 overflow-auto'
                 >
                   {noteUrl.includes(".pdf") ? (
-                    <div className="h-96 overflow-auto">
+                    <div className='h-96 overflow-auto'>
                       <Document
                         file={noteUrl}
                         onLoadSuccess={onDocumentSuccess}
@@ -127,14 +133,14 @@ export default function SinglePost() {
               ))}
             </Carousel>
           </div>
-          <h1 className="text-2xl text-left font-semibold font-[Poppins] text-[#005696] my-4">
+          <h1 className='text-2xl text-left font-semibold font-[Poppins] text-[#005696] my-4'>
             Shared By: {note.username}
           </h1>
-          <h1 className="text-xl text-left font-semibold font-[Poppins] text-[#005696] my-4">
+          <h1 className='text-xl text-left font-semibold font-[Poppins] text-[#005696] my-4'>
             Course code: {note.coursecode.toUpperCase()}
           </h1>
           <StarRating
-            className="absolute right-0"
+            className='absolute right-0'
             rating={note.rating}
             onUpdateRating={handleRatingUpdate}
           />
