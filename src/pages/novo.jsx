@@ -79,7 +79,7 @@ export default function SinglePost() {
           <p className="text-1xl text-left font-semibold font-[Poppins] text-[#005696] mb-4">
             {note.description}
           </p>
-          <div className="w-3/4 h-max mb-4">
+          <div className="w-3/4 h-max">
             <Carousel className=" center border-slate-400" autoplay>
               {note.noteUrls.map((noteUrl, index) => (
                 <div
@@ -131,6 +131,7 @@ export default function SinglePost() {
               Download
             </Button>
           </div>
+          />
         </section>
       </>
     </div>
