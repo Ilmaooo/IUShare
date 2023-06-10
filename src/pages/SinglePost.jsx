@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { useParams } from "react-router-dom";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import Spinner from "../components/Spinner";
 import { toast } from "react-toastify";
 
-import StarRating from "../components/StarRating";
+import StarRating, { handleRatingUpdate } from "../components/StarRating";
 import { Document, Page, pdfjs } from "react-pdf";
 import { Carousel } from "antd";
-import { getAuth } from "firebase/auth";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -17,7 +16,6 @@ export default function SinglePost() {
   const [note, setNote] = useState(null);
   const [loading, setLoading] = useState(true);
   const { postId } = useParams();
-  const auth = getAuth();
 
   const [numPages, setNumPages] = useState(null);
   const [pageNum, setPageNum] = useState(1);
@@ -59,38 +57,6 @@ export default function SinglePost() {
   if (!note) {
     return <div>Post not found</div>;
   }
-
-  const handleRatingUpdate = (ratingValue) => {
-    if (note.userRef === auth.currentUser.uid) {
-      console.log("Cannot rate your own note.");
-      return;
-    }
-    // Calculate new average rating
-    const currentRating = note.rating || 0;
-    const totalRatings = note.totalRatings || 0;
-    const newTotalRatings = totalRatings + 1;
-    const newAverageRating =
-      (currentRating * totalRatings + ratingValue) / newTotalRatings;
-
-    // Update rating in Firestore
-    const docRef = doc(db, "listings", postId);
-    updateDoc(docRef, {
-      rating: newAverageRating,
-      totalRatings: newTotalRatings,
-    })
-      .then(() => {
-        console.log("Rating successfully updated in Firestore!");
-        // Update the note object in the state
-        setNote((prevNote) => ({
-          ...prevNote,
-          rating: newAverageRating,
-          totalRatings: newTotalRatings,
-        }));
-      })
-      .catch((error) => {
-        console.error("Error updating rating in Firestore: ", error);
-      });
-  };
 
   return (
     <div className='flex flex-col'>
@@ -142,7 +108,9 @@ export default function SinglePost() {
           <StarRating
             className='absolute right-0'
             rating={note.rating}
-            onUpdateRating={handleRatingUpdate}
+            onUpdateRating={(ratingValue) =>
+              handleRatingUpdate(note, setNote, postId, ratingValue)
+            }
           />
         </section>
       </>
