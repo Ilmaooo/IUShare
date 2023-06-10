@@ -38,7 +38,7 @@ export default function LogIn() {
   }
   return (
     <section className="flex-row items-center justify-center min-h-screen bg-sky-100">
-      <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-8">
+      <h1 className="text-2xl text-center pt-8 font-semibold text-blue-900 select-none py-8">
         Welcome back to IUShare
       </h1>
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
@@ -82,12 +82,12 @@ export default function LogIn() {
               />
               {showPassword ? (
                 <AiFillEyeInvisible
-                  className="absolute right-3 top-3 text-xl cursor-pointer"
+                  className="absolute right-3 top-11 text-xl cursor-pointer"
                   onClick={() => setShowPassword((prevState) => !prevState)}
                 />
               ) : (
                 <AiFillEye
-                  className="absolute right-3 top-3 text-xl cursor-pointer"
+                  className="absolute right-3 top-11 text-xl cursor-pointer"
                   onClick={() => setShowPassword((prevState) => !prevState)}
                 />
               )}
