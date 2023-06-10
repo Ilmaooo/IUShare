@@ -37,9 +37,11 @@ export default function LogIn() {
     }
   }
   return (
-    <div className="flex items-center justify-center bg-gradient-to-r from-blue-200 to-violet-200 bg-sky-100 bg-stone-100">
-
-      <div className="flex min-h-screen justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
+    <section className="flex-row items-center justify-center min-h-screen bg-sky-100">
+      <h1 className="text-2xl text-center pt-8 font-semibold text-blue-900 select-none py-8">
+        Welcome back to IUShare
+      </h1>
+      <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
         <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
          <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-4">
            Welcome back to IUShare
@@ -125,6 +127,6 @@ export default function LogIn() {
           </form>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
