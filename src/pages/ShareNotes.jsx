@@ -14,6 +14,7 @@ import { collection, serverTimestamp, doc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { VscCloudUpload } from "react-icons/vsc";
+import { Select } from "antd";
 
 export default function ShareNotes() {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function ShareNotes() {
   });
 
   const { title, description, username, notes, coursecode, rating } = formData;
-  
+
   if (currentUser) {
     formData.username = currentUser.displayName || currentUser.email;
   }
@@ -77,7 +78,7 @@ export default function ShareNotes() {
         const filename = `${auth.currentUser.uid}-${note.name}-${uuidv4()}`;
         const storageRef = ref(storage, filename);
         const uploadTask = uploadBytesResumable(storageRef, note);
-     
+
         uploadTask.on(
           "state_changed",
           (snapshot) => {
@@ -156,87 +157,87 @@ export default function ShareNotes() {
     return <Spinner />;
   }
 
-
   return (
-<main>
+    <main>
       <Header />
-      <div className='max-w-md px-4 mx-auto font-serif '>
-        <h1 className='text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3'>
+      <div className="max-w-md px-4 mx-auto font-serif ">
+        <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-3">
           Share a Note
         </h1>
         <form className="space-x-4" onSubmit={onSubmit}>
           <div className="absolute left-0 px-4 mx-8 w-1/2 mr-4 ml-16">
-            <div className='mb-3 w-3/4 ml-6'>
+            <div className="mb-3 w-3/4 ml-6">
               <label
-                htmlFor='username'
-                className='block mb-2 font-semibold text-blue-500 '
+                htmlFor="username"
+                className="block mb-1 font-semibold text-blue-500 "
               >
                 User Name
               </label>
               <input
-                type='text'
-                id='username'
+                type="text"
+                id="username"
                 value={formData.username}
-                placeholder='Name'
-                maxLength='32'
+                placeholder="Name"
+                maxLength="32"
                 required
-                className='w-full h-14 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded  focus:outline-none focus:border-sky-600 mb-3'
+                className="w-full h-10 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded  focus:outline-none focus:border-sky-600 mb-2"
                 readOnly
               />
             </div>
 
-            <div className='mb-3 w-3/4 ml-6'>
+            <div className="mb-1 w-3/4 ml-6">
               <label
-                htmlFor='title'
-                className='block mb-2 font-semibold text-blue-500'
+                htmlFor="title"
+                className="block mb-1 font-semibold text-blue-500"
               >
                 Title
               </label>
               <input
-                type='text'
-                id='title'
+                type="text"
+                id="title"
                 value={title}
                 onChange={onChange}
-                placeholder='Title'
-                maxLength='32'
+                placeholder="Title"
+                maxLength="32"
                 required
-                className='w-full h-14 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded focus:outline-none focus:border-sky-600  focus:bg-slate-200 mb-3'
+                className="w-full h-10 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded focus:outline-none focus:border-sky-600  focus:bg-slate-200 mb-2"
               />
             </div>
 
-            <div className='mb-3 w-3/4 ml-6'>
+            <div className="mb-1 w-3/4 ml-6">
               <label
-                htmlFor='description'
-                className='block mb-2 font-semibold text-blue-500'
+                htmlFor="description"
+                className="block mb-1 font-semibold text-blue-500"
               >
                 Description
               </label>
               <textarea
-                type='text'
-                id='description'
+                type="text"
+                id="description"
                 value={description}
                 onChange={onChange}
-                placeholder='Description'
+                placeholder="Description"
                 required
-                className='w-full h-14 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded focus:outline-none focus:bg-slate-200 focus:border-sky-600 mb-3'
+                className="w-full h-14 px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg border-gray-300 rounded focus:outline-none focus:bg-slate-200 focus:border-sky-600 mb-2"
               />
             </div>
 
-            <div className='mb-3 w-3/4 ml-6'>
+            <div className="mb-1 w-3/4 ml-6">
               <label
-                htmlFor='coursecode'
-                className='block mb-2 font-semibold text-blue-500'
+                htmlFor="coursecode"
+                className="block mb-2 font-semibold text-blue-500"
               >
                 Course Code
               </label>
+
               <select
-                id='coursecode'
+                id="coursecode"
                 value={coursecode}
                 onChange={onChange}
                 required
-                className='w-full h-14  px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg  border-gray-300  focus:outline-none focus:bg-slate-200 focus:border-sky-600 mb-3 appearance-none origin-top '
+                className="w-full h-10  px-4 py-2 text-xl text-gray-700  bg-blue-100 rounded-lg  border-gray-300  focus:outline-none focus:bg-slate-200 focus:border-sky-600 mb-3 appearance-none origin-top "
               >
-                <option value='' disabled>
+                <option value="" disabled>
                   Choose a course code
                 </option>
                 <option>CS103</option>
@@ -270,51 +271,47 @@ export default function ShareNotes() {
             </div>
           </div>
           <div className="absolute right-0 px-8 py-4 mx-8 my-4 w-1/2 justify-center  ml-4">
-             <div className=" px-8 py-4 place-items-center flex flex-col justify-center items-center w-full h-64 bg-stone-100 border-2 border-dashed border-slate-400 hover:border-indigo-300 rounded-xl mb-16 ">
-             <label
-              htmlFor='notes'
-              className='block font-semibold text-blue-800'
-            >
-             Upload you Notes 
-            </label>
-            <p className='text-gray-600'>
-              The first image will be the cover (max 6)
-            </p>
-            <VscCloudUpload className="text-4xl"/>
-            <div  className="flex items-center justify-center">
-            <input
-              type='file'
-              id='notes'
-              onChange={onChange}
-              accept='.jpg,.png,.jpeg,.pdf'
-              multiple
-              required
-              className='w-full h-full opacity-0 cursor-pointer'
-              placeholder=" Upload you Notes "
-            />
+            <div className=" px-8 py-4 place-items-center flex flex-col justify-center items-center w-full h-64 bg-stone-100 border-2 border-dashed border-slate-400 hover:border-indigo-300 rounded-xl mb-6 ">
+              <label
+                htmlFor="notes"
+                className="block font-semibold text-blue-800"
+              >
+                Upload you Notes
+              </label>
+              <p className="text-gray-600">
+                The first image will be the cover (max 6)
+              </p>
+              <VscCloudUpload className="text-4xl" />
+              <div className="flex items-center justify-center">
+                <input
+                  type="file"
+                  id="notes"
+                  onChange={onChange}
+                  accept=".jpg,.png,.jpeg,.pdf"
+                  multiple
+                  required
+                  className="w-full h-full opacity-0 cursor-pointer"
+                  placeholder=" Upload you Notes "
+                />
+              </div>
+              <div className="">
+                {notes.length > 0 && (
+                  <span className="ml-2 text-green-600">
+                    Files uploaded successfully! , number of files uploaded{" "}
+                    {notes.length}, {notes.type}
+                  </span>
+                )}
+              </div>
             </div>
-            <div className="">
-             {notes.length > 0 && (
-               <span className="ml-2 text-green-600">Files uploaded successfully! , number of files uploaded {notes.length}, {notes.type}</span>               
-             )} 
-           </div>   
-           </div>
             <button
-            type='submit'
-            className='bottom-0 mt-8 w-full my-8 px-8 py-3 bg-blue-400 text-white font-medium rounded-lg text-m uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out'
-          >
-            Share Note
-          </button>
+              type="submit"
+              className="bottom-0  w-full my-2 px-8 py-3 bg-blue-400 text-white font-medium rounded-lg text-m uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out"
+            >
+              Share Note
+            </button>
           </div>
-         
-      
         </form>
       </div>
     </main>
   );
 }
-
-
-
-
-

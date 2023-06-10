@@ -35,7 +35,7 @@ export default function PostView({ note, id }) {
     if (isPdf) {
       // Render the first page of the PDF
       return (
-        <div className="h-[150px] w-[150px] object-cover hover:scale-105 transition-scale duration-200 ease-in">
+        <div className="h-[150px] w-[150px] object-cover hover:scale-105 transition-scale duration-200 ease-in select-none">
           <object data={firstUrl} type="application/pdf">
             {/* <img src={defaultpic} alt="defaultpic" /> */}
           </object>

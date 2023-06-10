@@ -62,7 +62,7 @@ export default function Profile() {
               My Notes
 
             </h2> */}
-            <h2 className="transition-colors duration-300 hover:text-blue-500 text-4xl text-center  font-playfair-display text-blue-900 mb-10 select-none cursor-pointer">
+            <h2 className="transition-colors duration-300 hover:text-blue-500 text-3xl text-center  font-playfair-display text-blue-900 mb-10 select-none cursor-pointer">
               My Notes
             </h2>
 

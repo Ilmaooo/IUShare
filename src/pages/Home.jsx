@@ -79,7 +79,9 @@ export default function Home() {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose} to="/prfile"><Link to="/profile">Profile</Link></MenuItem>
+              <MenuItem onClick={handleClose} to="/prfile">
+                <Link to="/profile">Profile</Link>
+              </MenuItem>
               <MenuItem onClick={handleClose}>
                 <Link to="/">Sign out</Link>
               </MenuItem>
@@ -100,7 +102,7 @@ export default function Home() {
       <div className="max-w-6xl px-3 mt-6 mx-auto mb-6">
         {!loading && topNotes.length > 0 ? (
           <>
-            <h2 className="text-4xl text-center font-semibold font-[Poppins] text-[#005696] mb-10">
+            <h2 className="transition-colors duration-300 hover:text-blue-500 text-3xl text-center  font-playfair-display text-blue-900 mb-10 select-none cursor-pointer">
               Top rated notes
             </h2>
             <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
@@ -113,14 +115,14 @@ export default function Home() {
           <p>No notes found.</p>
         )}
       </div>
-     
-     <hr className="m-4 "/>
+
+      <hr className="m-4 " />
 
       <div className="max-w-6xl px-3 mt-6 mx-auto mb-6">
         {!loading && notes.length > 0 ? (
           <>
-            <h2 className="text-4xl text-center font-semibold font-[Poppins] text-[#005696] mb-10">
-           notes
+            <h2 className="transition-colors duration-300 hover:text-blue-500 text-3xl text-center  font-playfair-display text-blue-900 mb-10 select-none cursor-pointer">
+              All Notes
             </h2>
             <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
               {notes.map((note) => (
