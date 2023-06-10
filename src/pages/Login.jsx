@@ -43,9 +43,6 @@ export default function LogIn() {
       </h1>
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
         <div className="md:w-[67%] lg:w-[50%] mb-12 md:mb-6">
-         <h1 className="text-2xl text-center mt-6 font-semibold text-blue-900 select-none py-4">
-           Welcome back to IUShare
-          </h1>
           <p className="mt-1 text-blue-900 font-thin text-4xl font-mono select-none">
             Don't Just Take Notes, Share Them - Join the IUS CS/SE Collaborative
             Learning Experience

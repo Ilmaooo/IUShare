@@ -1,11 +1,10 @@
 import Header from "../components/Header";
 import PostView from "../components/PostView";
-import StarRating from "../components/StarRating";
 import { useEffect, useState } from "react";
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { db } from "../firebase";
 import { useParams } from "react-router-dom";
-import notfound from "../img/404-error.png";
+import { Result, Row, Col } from "antd";
 
 export default function CoursePage() {
   const [notes, setNotes] = useState([]);
@@ -50,20 +49,23 @@ export default function CoursePage() {
       <Header />
 
       <div>
+        <h1 className="transition-colors duration-300 hover:text-blue-500 text-3xl text-center  font-playfair-display text-sky-600 mb-10 select-none cursor-pointer py-8 ">
+          Beyond the Textbooks: {coursecode.toUpperCase()} Revealed – Igniting
+          Curiosity for {coursecode.toUpperCase()}
+        </h1>
         {!loading && notes.length > 0 && (
-          <ul className='sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5-'>
+          <ul className="sm:grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5-">
             {notes.map((note, id) => (
               <PostView note={note} id={note.id} key={note.id} />
             ))}
           </ul>
         )}
         {!loading && notes.length === 0 && (
-          <div className='fixed inset-0 bg-sky-100 flex items-center justify-center flex-col'>
-            <p className='font-mono text-3xl text-blue-900 font-thin max-w-screen-2xl'>
-              No notes found for the specified course code.
-            </p>
-            <img src={notfound} alt='error' className='mt-4 h-80' />
-          </div>
+          <Result
+            status="404"
+            title="404"
+            subTitle="No notes found for the specified course."
+          />
         )}
       </div>
     </>

@@ -100,8 +100,8 @@ export default function Home() {
           <p>No notes found.</p>
         )}
       </div>
-     
-     <hr className="m-4 "/>
+
+      <hr className="m-4 " />
 
       <div className="max-w-6xl px-3 mt-6 mx-auto mb-6">
         {!loading && notes.length > 0 ? (
