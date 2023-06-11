@@ -18,6 +18,7 @@ export default function SinglePost() {
   const [note, setNote] = useState(null);
   const [loading, setLoading] = useState(true);
   const { postId } = useParams();
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const [numPages, setNumPages] = useState(null);
   const [pageNum, setPageNum] = useState(1);
@@ -80,6 +81,18 @@ export default function SinglePost() {
   const auth = getAuth();
   const isAuthor = note.userRef === auth.currentUser.uid; //for delete part
 
+  const handleConfirmDelete = () => {
+    handleDelete();
+    setShowConfirmation(false);
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmation(false);
+  };
+
+  const handleDeleteClick = () => {
+    setShowConfirmation(true);
+  };
   return (
     <div className='flex flex-col'>
       <Header />
@@ -146,11 +159,11 @@ export default function SinglePost() {
               >
                 Download
               </Button>
-              {isAuthor && (
+              {isAuthor && !showConfirmation && (
                 <Button
                   type='default'
                   icon={<DeleteOutlined />}
-                  onClick={handleDelete}
+                  onClick={handleDeleteClick}
                   style={{
                     marginTop: "8px",
                     backgroundColor: "#ffcccc",
@@ -161,6 +174,14 @@ export default function SinglePost() {
                 >
                   Delete
                 </Button>
+              )}
+              {showConfirmation && (
+                <div style={{ marginTop: "8px" }}>
+                  <Button type='primary' danger onClick={handleConfirmDelete}>
+                    Yes
+                  </Button>
+                  <Button onClick={handleCancelDelete}>No</Button>
+                </div>
               )}
             </div>
           </div>
