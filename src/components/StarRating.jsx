@@ -37,14 +37,16 @@ export function handleRatingUpdate(note, setNote, postId, ratingValue) {
     });
 }
 
-function StarRating({ rating, onUpdateRating }) {
+function StarRating({ rating, onUpdateRating, clickable }) {
   const [hover, setHover] = useState(null);
 
   const handleRatingClick = (ratingValue) => {
-    onUpdateRating(ratingValue);
+    if (clickable && onUpdateRating) {
+      onUpdateRating(ratingValue);
+    }
   };
 
-  const averageRating = Math.round(rating * 2) / 2;
+  const averageRating = (Math.round(rating * 2) / 2).toFixed(1);
   const stars = [];
   for (let i = 0; i < 5; i++) {
     if (averageRating >= i + 1) {
@@ -59,7 +61,7 @@ function StarRating({ rating, onUpdateRating }) {
     }
   }
 
-  return (
+  /*return (
     <div style={{ display: "flex" }}>
       {stars.map((star, index) => (
         <div
@@ -73,7 +75,27 @@ function StarRating({ rating, onUpdateRating }) {
         </div>
       ))}
     </div>
+    
+  );*/
+
+  return (
+    <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: "flex", marginRight: "0.5rem" }}>
+        {stars.map((star, index) => (
+          <div
+            key={index}
+            onMouseEnter={() => setHover(index + 1)}
+            onMouseLeave={() => setHover(null)}
+            onClick={() => handleRatingClick(index + 1)}
+            style={{ cursor: clickable ? "pointer" : "default" }}
+          >
+            {star}
+          </div>
+        ))}
+      </div>
+      <div style={{ color: "#005696" }}>{averageRating}</div>{" "}
+      {/* Display average rating */}
+    </div>
   );
 }
-
 export default StarRating;

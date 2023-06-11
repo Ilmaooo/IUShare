@@ -68,10 +68,7 @@ export default function PostView({ note, id }) {
           <p>{note.description.substring(0, 25)}...</p>
           <p>{note.coursecode}</p>
           <div style={{ display: "flex" }}>
-            <StarRating
-              rating={note.rating}
-              onUpdateRating={handleRatingUpdate}
-            />
+            <StarRating rating={note.rating} clickable={false} />
           </div>
         </div>
       </Link>
