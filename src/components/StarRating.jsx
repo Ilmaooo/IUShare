@@ -6,8 +6,14 @@ import { getAuth } from "firebase/auth";
 
 export function handleRatingUpdate(note, setNote, postId, ratingValue) {
   const auth = getAuth();
+  //check if the user is author of the note
   if (note.userRef === auth.currentUser.uid) {
     console.log("Cannot rate your own note.");
+    return;
+  }
+  // Check if the user has already rated the note
+  if (note.ratedBy.includes(auth.currentUser.uid)) {
+    console.log("Already rated this note.");
     return;
   }
   // Calculate new average rating
@@ -22,6 +28,7 @@ export function handleRatingUpdate(note, setNote, postId, ratingValue) {
   updateDoc(docRef, {
     rating: newAverageRating,
     totalRatings: newTotalRatings,
+    ratedBy: [...note.ratedBy, auth.currentUser.uid],
   })
     .then(() => {
       console.log("Rating successfully updated in Firestore!");
@@ -30,6 +37,7 @@ export function handleRatingUpdate(note, setNote, postId, ratingValue) {
         ...prevNote,
         rating: newAverageRating,
         totalRatings: newTotalRatings,
+        ratedBy: [...prevNote.ratedBy, auth.currentUser.uid],
       }));
     })
     .catch((error) => {
