@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import NavLinks from "./NavLinks";
 import { useState } from "react";
+import { IoExitOutline } from "react-icons/io5";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
@@ -49,6 +50,12 @@ export default function Header() {
             >
               Profile
             </li>
+            <Link
+              to="/"
+              className="cursor-pointer py-7 px-3 inline-block text-xl"
+            >
+              <IoExitOutline />
+            </Link>
           </ul>
         </div>
         <div className="md:hidden">
